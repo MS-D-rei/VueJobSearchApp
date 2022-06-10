@@ -7,8 +7,21 @@ module.exports = {
     'plugin:vue/vue3-recommended',
     'prettier',
   ],
+  overrides: [
+    {
+      files: [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[tj]s?(x)",
+        // "test/**",
+      ],
+      env: {
+        "jest/globals": true,
+      },
+      plugins: ["jest"],
+      extends: ["plugin:jest/recommended"]
+    }
+  ],
   rules: {
-    // override/add rules settings here, such as:
-    // 'vue/no-unused-vars': 'error'
+    // "indent": ["error", 2]
   }
 }
