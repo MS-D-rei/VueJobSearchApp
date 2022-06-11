@@ -1,0 +1,13 @@
+{
+  "include": [
+    "./src/**/*"
+  ],
+  "compilerOptions": {
+    // inform VScode where the base directory to resolve non-relative module name is
+    "baseUrl": ".",
+    // the path option enables VScode can use intelliSense when we're importing modules using @ symbol alias.
+    "paths": {
+      "@/*": ["/src/*"]
+    },
+  }
+}
