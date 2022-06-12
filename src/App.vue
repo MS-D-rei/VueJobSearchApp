@@ -1,14 +1,7 @@
 <script setup>
+import MainNav from "@/components/MainNav.vue";
 </script>
 
 <template>
-  <header>
-  </header>
-
-  <main>
-    <h1 class="text-3xl font-bold underline">Hello Vue</h1>
-  </main>
+  <MainNav />
 </template>
-
-<style>
-</style>
