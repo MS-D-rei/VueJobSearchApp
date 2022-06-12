@@ -1,6 +1,7 @@
 {
   "include": [
-    "./src/**/*"
+    "./src/**/*",
+    "./tests/*"
   ],
   "compilerOptions": {
     // inform VScode where the base directory to resolve non-relative module name is
@@ -9,5 +10,7 @@
     "paths": {
       "@/*": ["/src/*"]
     },
-  }
+    // TypeScript intellisense is disabled on template. To enable, configure `"jsx": "preserve"` in the `"compilerOptions"` property of tsconfig or jsconfig. 
+    "jsx": "preserve"
+  },
 }
