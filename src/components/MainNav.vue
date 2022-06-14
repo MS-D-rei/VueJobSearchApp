@@ -7,7 +7,6 @@
         <a href="/" class="flex items-center h-full text-xl"
           >{{ companyName }}</a
         >
-        <h2 class="flex items-center h-full ml-8">Developed by {{ author.firstName }} {{ author.lastName }}</h2>
       </div>
     </div>
   </header>
@@ -15,8 +14,4 @@
 
 <script setup>
 const companyName = "Anonymous Careers"
-const author = {
-  firstName: "John",
-  lastName: 'Doe'
-}
 </script>
