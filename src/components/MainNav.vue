@@ -21,12 +21,16 @@
             </li>
           </ul>
         </nav>
+        <div class="flex items-center h-full ml-auto">
+          <SignInButton />
+        </div>
       </div>
     </div>
   </header>
 </template>
 
 <script setup>
+import SignInButton from '@/components/SignInButton.vue';
 const companyName = "Anonymous Careers";
 const url = "https://careers.google.com/";
 const menuItems = [
