@@ -22,7 +22,8 @@
           </ul>
         </nav>
         <div class="flex items-center h-full ml-auto">
-          <SignInButton />
+          <ProfileImage v-if="isLoggedIn" />
+          <SignInButton v-else/>
         </div>
       </div>
     </div>
@@ -30,7 +31,9 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import SignInButton from '@/components/SignInButton.vue';
+import ProfileImage from '@/components/ProfileImage.vue';
 const companyName = "Anonymous Careers";
 const url = "https://careers.google.com/";
 const menuItems = [
@@ -41,4 +44,5 @@ const menuItems = [
   "Students",
   "Jobs",
 ];
+const isLoggedIn = ref(false)
 </script>
