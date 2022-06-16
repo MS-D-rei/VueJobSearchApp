@@ -80,7 +80,7 @@ module.exports = {
     "js",
   //   "mjs",
   //   "cjs",
-  //   "jsx",
+    "jsx",
   //   "ts",
   //   "tsx",
     "json",
@@ -91,6 +91,7 @@ module.exports = {
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
+    "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js",
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -179,6 +180,7 @@ module.exports = {
   transform: {
     "^.+\\.vue$": "@vue/vue3-jest",
     "^.+\\.[t|j]sx?$": "babel-jest",
+    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/fileTransformer.js"
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation

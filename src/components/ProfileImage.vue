@@ -1,13 +1,13 @@
 <template>
   <img
-    src="@/assets/toon-link-face-png-transparent.png"
+    :src="profileImageUrl"
     alt="profileImage"
     class="w-8 h-8 object-contain rounded-3xl"
   />
 </template>
 
 <script setup>
-// const imageLink = ""
+import profileImageUrl from "@/assets/toon-link-face-png-transparent.png";
 </script>
 
 <style lang="scss" scoped></style>

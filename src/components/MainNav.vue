@@ -22,8 +22,8 @@
           </ul>
         </nav>
         <div class="flex items-center h-full ml-auto">
-          <ProfileImage v-if="isLoggedIn" />
-          <SignInButton v-else/>
+          <ProfileImage v-if="isLoggedIn" data-test="profile-image" />
+          <SignInButton v-else data-test="login-button" @click="loginUser" />
         </div>
       </div>
     </div>
@@ -31,9 +31,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import SignInButton from '@/components/SignInButton.vue';
-import ProfileImage from '@/components/ProfileImage.vue';
+import { ref } from "vue";
+import SignInButton from "@/components/SignInButton.vue";
+import ProfileImage from "@/components/ProfileImage.vue";
 const companyName = "Anonymous Careers";
 const url = "https://careers.google.com/";
 const menuItems = [
@@ -44,5 +44,8 @@ const menuItems = [
   "Students",
   "Jobs",
 ];
-const isLoggedIn = ref(false)
+const isLoggedIn = ref(false);
+function loginUser() {
+  isLoggedIn.value = true;
+}
 </script>
