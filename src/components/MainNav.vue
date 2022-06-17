@@ -23,7 +23,13 @@
         </nav>
         <div class="flex items-center h-full ml-auto">
           <ProfileImage v-if="isLoggedIn" data-test="profile-image" />
-          <SignInButton v-else data-test="login-button" @click="loginUser" />
+          <ActionButton
+            v-else
+            text="Sign in"
+            :is-primary="true"
+            data-test="login-button"
+            @click="loginUser"
+          />
         </div>
       </div>
     </div>
@@ -32,7 +38,7 @@
 
 <script setup>
 import { ref } from "vue";
-import SignInButton from "@/components/SignInButton.vue";
+import ActionButton from "@/components/ActionButton.vue";
 import ProfileImage from "@/components/ProfileImage.vue";
 const companyName = "Anonymous Careers";
 const url = "https://careers.google.com/";
