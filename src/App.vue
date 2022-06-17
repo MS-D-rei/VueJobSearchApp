@@ -1,7 +1,11 @@
 <script setup>
 import MainNav from "@/components/MainNav.vue";
+import HeroSection from "@/components/HeroSection.vue"
 </script>
 
 <template>
-  <MainNav />
+  <div>
+    <MainNav />
+    <HeroSection />
+  </div>
 </template>
