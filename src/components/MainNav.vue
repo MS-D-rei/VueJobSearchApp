@@ -32,6 +32,7 @@
           />
         </div>
       </div>
+      <SubNav v-if="isLoggedIn" data-test="subnav" />
     </div>
   </header>
 </template>
@@ -40,6 +41,7 @@
 import { ref } from "vue";
 import ActionButton from "@/components/ActionButton.vue";
 import ProfileImage from "@/components/ProfileImage.vue";
+import SubNav from "@/components/SubNav.vue";
 const companyName = "Anonymous Careers";
 const url = "https://careers.google.com/";
 const menuItems = [

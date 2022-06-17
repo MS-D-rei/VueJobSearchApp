@@ -3,15 +3,27 @@
  */
 
 import { mount } from "@vue/test-utils";
-import MainNav from "@/components/MainNav";
+import MainNav from "@/components/MainNav.vue";
+
+const factroyMainNav = () => {
+  return mount(MainNav, {
+    global: {
+      stubs: {
+        ProfileImage: true,
+        ActionButton: true,
+        SubNav: true,
+      },
+    },
+  });
+};
 
 describe("MainNav", () => {
   it("displays company name", () => {
-    const wrapper = mount(MainNav);
+    const wrapper = factroyMainNav();
     expect(wrapper.text()).toMatch("Anonymous Careers");
   });
   it("displays menu items for navigation", () => {
-    const wrapper = mount(MainNav);
+    const wrapper = factroyMainNav();
     // data-test, custom attribute is for testing robustness
     const navigationMenuItems = wrapper.findAll(
       "[data-test='main-nav-list-item']"
@@ -31,7 +43,7 @@ describe("MainNav", () => {
 
 describe("when user is logged out", () => {
   it("prompts user to sign in", () => {
-    const wrapper = mount(MainNav);
+    const wrapper = factroyMainNav();
     const loginButton = wrapper.find("[data-test='login-button']");
     expect(loginButton.exists()).toBe(true);
   });
@@ -39,13 +51,23 @@ describe("when user is logged out", () => {
 
 describe("when user logs in", () => {
   it("displays the profile image", async () => {
-    const wrapper = mount(MainNav);
+    const wrapper = factroyMainNav();
     let profileImage = wrapper.find("[data-test='profile-image']");
     expect(profileImage.exists()).toBe(false);
 
     const loginButton = wrapper.find("[data-test='login-button']");
-    await loginButton.trigger("click")
+    await loginButton.trigger("click");
     profileImage = wrapper.find("[data-test='profile-image']");
     expect(profileImage.exists()).toBe(true);
+  });
+  it("displays subnavigation menu with additional information", async () => {
+    const wrapper = factroyMainNav();
+    let subnav = wrapper.find("[data-test='subnav']");
+    expect(subnav.exists()).toBe(false);
+
+    const loginButton = wrapper.find("[data-test='login-button']");
+    await loginButton.trigger("click");
+    subnav = wrapper.find("[data-test='subnav']");
+    expect(subnav.exists()).toBe(true);
   });
 });
