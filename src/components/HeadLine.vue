@@ -11,6 +11,7 @@
 
 <script setup>
 import { onBeforeUnmount, ref, computed } from "vue";
+import nextElementInList from "@/utils/nextElementInList";
 
 const action = ref("Build");
 const interval = ref(null);
@@ -24,11 +25,12 @@ onBeforeUnmount(() => {
 function changeTitle() {
   const actions = ["Build", "Create", "Design", "Code"];
   interval.value = setInterval(() => {
-    const currentActionIndex = actions.indexOf(action.value);
-    // use Modulo to cycle
-    const nextActionIndex = (currentActionIndex + 1) % 4; // 4 -> 0 so 1, 2, 3, 4->0, 1, 2, 3...
-    const nextAction = actions[nextActionIndex];
-    action.value = nextAction;
+    // const currentActionIndex = actions.indexOf(action.value);
+    // // use Modulo to cycle
+    // const nextActionIndex = (currentActionIndex + 1) % 4; // 4 -> 0 so 1, 2, 3, 4->0, 1, 2, 3...
+    // const nextAction = actions[nextActionIndex];
+    // action.value = nextAction;
+    action.value = nextElementInList(actions, action.value);
   }, 3000);
 }
 
