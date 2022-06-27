@@ -1,9 +1,9 @@
 <template>
   <section>
-    <h1 class="font-bold tracking-tighter text-8xl mb-14">
+    <h1 class="font-bold tracking-tighter text-8xl mb-14" data-test="action-phrase">
       <span :class="actionClasses">{{ action }} </span>
       <br />
-      everyone
+      for everyone
     </h1>
     <h2 class="text-3xl font-normal">Find your next job at Anonymous Careers</h2>
   </section>
