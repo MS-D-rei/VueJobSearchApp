@@ -40,8 +40,8 @@
 <script setup>
 import { ref, computed } from "vue";
 import ActionButton from "@/components/ActionButton.vue";
-import ProfileImage from "@/components/ProfileImage.vue";
-import SubNav from "@/components/SubNav.vue";
+import ProfileImage from "@/components/Navigation/ProfileImage.vue";
+import SubNav from "@/components/Navigation/SubNav.vue";
 const companyName = "Anonymous Careers";
 const url = "https://careers.google.com/";
 const menuItems = [

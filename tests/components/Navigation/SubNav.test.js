@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { mount } from "@vue/test-utils";
-import SubNav from "@/components/SubNav";
+import SubNav from "@/components/Navigation/SubNav";
 
 describe("SubNav", () => {
   describe("when user is on job page", () => {

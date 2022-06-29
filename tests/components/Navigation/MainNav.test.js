@@ -3,7 +3,7 @@
  */
 
 import { mount } from "@vue/test-utils";
-import MainNav from "@/components/MainNav.vue";
+import MainNav from "@/components/Navigation/MainNav.vue";
 
 const factroyMainNav = () => {
   return mount(MainNav, {

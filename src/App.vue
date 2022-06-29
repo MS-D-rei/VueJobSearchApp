@@ -1,5 +1,5 @@
 <script setup>
-import MainNav from "@/components/MainNav.vue";
+import MainNav from "@/components/Navigation/MainNav.vue";
 import HeroSection from "@/components/HeroSection.vue"
 </script>
 
