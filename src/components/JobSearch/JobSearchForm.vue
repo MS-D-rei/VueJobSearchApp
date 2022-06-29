@@ -5,13 +5,14 @@
     <font-awesome-icon :icon="['fas', 'search']" class="ml-4 mr-3" />
     <div class="flex flex-nowrap flex-1 h-full text-base font-light">
       <div class="relative flex items-center flex-1 h-full pr-3">
-        <label for="role" class="absolute left-0 -top-10">Role: {{ role }}</label>
-        <input
-          v-model.lazy="role"
-          type="text"
-          name="role"
+        <label for="role" class="absolute left-0 -top-10"
+          >Role: {{ role }}</label
+        >
+        <!-- v-model has modelValue property and update:modelValue event by default -->
+        <TextInput
+          v-model:inputValue="role"
           placeholder="Software engineer"
-          class="w-full text-lg font-normal focus:outline-none"
+          input-value="Vue Developer"
         />
       </div>
       <span
@@ -19,14 +20,10 @@
         >in</span
       >
       <div class="relative flex items-center flex-1 h-full pl-3">
-        <label for="location" class="absolute left-0 -top-10">Where?</label>
-        <input
-          v-model="location"
-          type="text"
-          name="location"
-          placeholder="Los Angeles"
-          class="w-full text-lg font-normal focus:outline-none"
-        />
+        <label for="location" class="absolute left-0 -top-10"
+          >Where: {{ location }}</label
+        >
+        <TextInput v-model:inputValue="location" placeholder="Los Angeles" />
       </div>
     </div>
 
@@ -37,6 +34,7 @@
 <script setup>
 import { ref } from "vue";
 import ActionButton from "@/components/Shared/ActionButton.vue";
+import TextInput from "@/components/Shared/TextInput.vue";
 
 const role = ref("");
 const location = ref("");
