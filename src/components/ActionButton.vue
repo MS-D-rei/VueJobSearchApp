@@ -30,10 +30,10 @@ const buttonClass = computed(() => {
 
 <style scoped>
 button {
-  @apply px-5 py-3 font-medium rounded;
+  @apply px-5 py-3 font-medium;
 }
 .sign-in {
-  @apply text-white border-0 bg-brand-blue-1 hover:shadow-blue;
+  @apply text-white border-0 bg-brand-blue-1 hover:shadow-blue rounded;
 }
 
 .search {
