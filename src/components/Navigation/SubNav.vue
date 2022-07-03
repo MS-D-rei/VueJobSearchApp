@@ -10,9 +10,14 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed } from "vue";
+import { useRoute } from "vue-router";
 
-const onJobResultPage = ref(true);
+const route = useRoute();
+
+const onJobResultPage = computed(() => {
+  return route.name === "JobSearchResults";
+});
 </script>
 
 <style scoped></style>
