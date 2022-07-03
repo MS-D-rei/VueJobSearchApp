@@ -13,7 +13,7 @@ describe("TextInput", () => {
       },
     });
     const input = wrapper.find("input");
-    console.log(wrapper.emitted());
+    // console.log(wrapper.emitted());
     input.setValue("N");
     // console.log(wrapper.emitted());
     input.setValue("Y");

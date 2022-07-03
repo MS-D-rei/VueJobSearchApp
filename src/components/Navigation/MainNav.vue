@@ -4,9 +4,9 @@
       <div
         class="flex flex-nowrap h-full px-8 mx-auto border-b border-solid border-brand-gray-1"
       >
-        <a :href="url" class="flex items-center h-full text-xl">{{
-          companyName
-        }}</a>
+        <router-link :to="{ name: 'Home' }" :href="url" class="flex items-center h-full text-xl"
+          >Anonymous Careers</router-link
+        >
         <nav class="flex ml-12">
           <ul class="flex h-full p-0 m-0 list-none">
             <li
@@ -42,7 +42,6 @@ import { ref, computed } from "vue";
 import ActionButton from "@/components/Shared/ActionButton.vue";
 import ProfileImage from "@/components/Navigation/ProfileImage.vue";
 import SubNav from "@/components/Navigation/SubNav.vue";
-const companyName = "Anonymous Careers";
 const url = "https://careers.google.com/";
 const menuItems = [
   "Teams",
@@ -60,6 +59,6 @@ const headerHeightClass = computed(() => {
   return {
     "h-16": !isLoggedIn.value,
     "h-32": isLoggedIn.value,
-  }
-})
+  };
+});
 </script>
