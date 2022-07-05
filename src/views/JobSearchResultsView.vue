@@ -1,16 +1,13 @@
 <template>
-  <h1 class="text-6xl font-bold">About View</h1>
-  <button @click="backToHome">back to home</button>
+  <div class="flex flex-row flex-nowrap w-full">
+    <JobFiltersSidebar />
+    <JobListings />
+  </div>
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
-
-const router = useRouter();
-
-function backToHome() {
-  router.push({ name: "Home" });
-}
+import JobFiltersSidebar from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebar.vue";
+import JobListings from "@/components/JobResults/JobListings.vue"
 </script>
 
 <style scoped></style>
