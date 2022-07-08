@@ -34,7 +34,7 @@ describe("MainNav", () => {
   // });
   it("displays company name", () => {
     const wrapper = factroyMainNav();
-    console.log(wrapper.html());
+    // console.log(wrapper.html());
     expect(wrapper.text()).toMatch("Anonymous Careers");
   });
   it("displays menu items for navigation", () => {
