@@ -39,6 +39,7 @@ describe("JobListings", () => {
     jest.spyOn(axios, "get").mockResolvedValue({ data: [] });
     // console.log(axios.get());
     mount(JobListings, stubJobListing());
+    await flushPromises();
     expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/jobs");
     axios.get.mockReset();
   });
