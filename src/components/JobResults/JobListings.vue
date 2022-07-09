@@ -8,6 +8,27 @@
         data-test="job-listing"
       />
     </ol>
+    <div class="mt-8 mx-auto">
+      <div class="flex flex-row flex-nowrap">
+        <p class="text-sm flex-grow">Page: {{ currentPageNumber }}</p>
+        <div class="flex items-center justify-center">
+          <router-link
+            v-if="previousPage"
+            :to="{ name: 'JobSearchResults', query: { page: previousPage } }"
+            class="mx-3 text-sm font-semibold text-brand-blue-1"
+            data-test="previous-page-link"
+            >Previous</router-link
+          >
+          <router-link
+            v-if="nextPage"
+            :to="{ name: 'JobSearchResults', query: { page: nextPage } }"
+            class="mx-3 text-sm font-semibold text-brand-blue-1"
+            data-test="next-page-link"
+            >Next</router-link
+          >
+        </div>
+      </div>
+    </div>
   </main>
 </template>
 
@@ -38,13 +59,29 @@ onMounted(async () => {
   }
 });
 
-const displayedJobs = computed(() => {
+const currentPageNumber = computed(() => {
   const pageString = route.query.page || "1";
-  const pageNumber = Number.parseInt(pageString);
+  return Number.parseInt(pageString);
+});
+
+const displayedJobs = computed(() => {
+  const pageNumber = currentPageNumber.value;
   const firstJobIndex = (pageNumber - 1) * 10; // page1 => (1 -1) * 10 == 0
   const lastJobIndex = pageNumber * 10; // page1 => 1 * 10 == 10
   return jobs.value.slice(firstJobIndex, lastJobIndex);
-})
+});
+
+const previousPage = computed(() => {
+  const previousPageNumber = currentPageNumber.value - 1;
+  const firstPageNumber = 1;
+  return previousPageNumber >= firstPageNumber ? previousPageNumber : undefined;
+});
+
+const nextPage = computed(() => {
+  const nextPageNumber = currentPageNumber.value + 1;
+  const maxPageNumber = Math.ceil(jobs.value.length / 10);
+  return nextPageNumber <= maxPageNumber ? nextPageNumber : undefined;
+});
 </script>
 
 <style scoped></style>
