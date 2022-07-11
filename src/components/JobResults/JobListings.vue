@@ -52,7 +52,8 @@ onMounted(async () => {
   //   })
   //   .then(() => {});
   try {
-    const response = await axios.get("http://localhost:3000/jobs");
+    const apiUrl = import.meta.env.VITE_API_URL;
+    const response = await axios.get(`${apiUrl}/jobs`);
     jobs.value = response.data;
   } catch (error) {
     console.log(error);

@@ -137,7 +137,7 @@ module.exports = {
   // runner: "jest-runner",
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
-  // setupFiles: [],
+  setupFiles: ["<rootDir>/.jest/setTestEnv.js"],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
   // setupFilesAfterEnv: [],
@@ -180,8 +180,8 @@ module.exports = {
   // A map from regular expressions to paths to transformers
   transform: {
     "^.+\\.vue$": "@vue/vue3-jest",
-    "^.+\\.[t|j]sx?$": ["@swc/jest"],
-    // "^.+\\.[t|j]sx?$": "babel-jest",
+    // "^.+\\.[t|j]sx?$": ["@swc/jest"],
+    "^.+\\.[t|j]sx?$": "babel-jest",
     "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/fileTransformer.js"
   },
 

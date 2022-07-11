@@ -40,7 +40,7 @@ describe("JobListings", () => {
     // console.log(axios.get());
     mount(JobListings, stubJobListing());
     await flushPromises();
-    expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/jobs");
+    expect(axios.get).toHaveBeenCalledWith("http://myfakeapi.com/jobs");
     axios.get.mockReset();
   });
 
