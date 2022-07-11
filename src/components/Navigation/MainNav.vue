@@ -6,7 +6,6 @@
       >
         <router-link
           :to="{ name: 'Home' }"
-          :href="url"
           class="flex items-center h-full text-xl"
           >Anonymous Careers</router-link
         >
@@ -43,11 +42,13 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { computed } from "vue";
 import ActionButton from "@/components/Shared/ActionButton.vue";
 import ProfileImage from "@/components/Navigation/ProfileImage.vue";
 import SubNav from "@/components/Navigation/SubNav.vue";
-const url = "https://careers.google.com/";
+import { storeToRefs } from "pinia";
+import { useLoginStore } from "@/store/store";
+
 const menuItems = [
   { text: "Teams", url: "/" },
   { text: "Locations", url: "/" },
@@ -56,10 +57,10 @@ const menuItems = [
   { text: "Students", url: "/" },
   { text: "Jobs", url: "/jobs/results" },
 ];
-const isLoggedIn = ref(false);
-function loginUser() {
-  isLoggedIn.value = true;
-}
+
+const { isLoggedIn } = storeToRefs(useLoginStore());
+const { loginUser } = useLoginStore();
+
 const headerHeightClass = computed(() => {
   return {
     "h-16": !isLoggedIn.value,

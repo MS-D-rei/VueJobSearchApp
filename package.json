@@ -15,12 +15,14 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/vue-fontawesome": "^3.0.0",
     "axios": "^0.27.2",
+    "pinia": "^2.0.0-rc.10",
     "vue": "^3.2.36",
     "vue-router": "^4.0.16"
   },
   "devDependencies": {
     "@babel/core": "^7.18.2",
     "@babel/preset-env": "^7.18.2",
+    "@pinia/testing": "^0.0.12",
     "@types/jest": "^28.1.1",
     "@vitejs/plugin-vue": "^2.3.3",
     "@vue/test-utils": "^2.0.0-rc.18",
