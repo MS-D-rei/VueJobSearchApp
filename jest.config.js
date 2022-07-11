@@ -81,8 +81,8 @@ module.exports = {
   //   "mjs",
   //   "cjs",
     "jsx",
-  //   "ts",
-  //   "tsx",
+    "ts",
+    "tsx",
     "json",
   //   "node",
     "vue"
@@ -180,7 +180,8 @@ module.exports = {
   // A map from regular expressions to paths to transformers
   transform: {
     "^.+\\.vue$": "@vue/vue3-jest",
-    "^.+\\.[t|j]sx?$": "babel-jest",
+    "^.+\\.[t|j]sx?$": ["@swc/jest"],
+    // "^.+\\.[t|j]sx?$": "babel-jest",
     "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/fileTransformer.js"
   },
 
