@@ -33,14 +33,20 @@
 </template>
 
 <script setup>
-import axios from "axios";
+// import axios from "axios";
 import JobListing from "@/components/JobResults/JobListing.vue";
-import { onMounted, ref, computed } from "vue";
+import { onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
+import { storeToRefs } from "pinia";
+import { useJobsStore } from "@/store/store";
 
 const route = useRoute();
+const jobsStore = useJobsStore();
 
-const jobs = ref([]);
+// const openingJobs = ref([]);
+const { openingJobs } = storeToRefs(jobsStore);
+const { fetchJobs } = jobsStore;
+
 onMounted(async () => {
   // axios
   //   .get("http://localhost:3000/jobs")
@@ -51,13 +57,14 @@ onMounted(async () => {
   //     console.log(error);
   //   })
   //   .then(() => {});
-  try {
-    const apiUrl = import.meta.env.VITE_API_URL;
-    const response = await axios.get(`${apiUrl}/jobs`);
-    jobs.value = response.data;
-  } catch (error) {
-    console.log(error);
-  }
+  // try {
+  //   const apiUrl = import.meta.env.VITE_API_URL;
+  //   const response = await axios.get(`${apiUrl}/jobs`);
+  //   openingJobs.value = response.data;
+  // } catch (error) {
+  //   console.log(error);
+  // }
+  await fetchJobs();
 });
 
 const currentPageNumber = computed(() => {
@@ -69,7 +76,7 @@ const displayedJobs = computed(() => {
   const pageNumber = currentPageNumber.value;
   const firstJobIndex = (pageNumber - 1) * 10; // page1 => (1 -1) * 10 == 0
   const lastJobIndex = pageNumber * 10; // page1 => 1 * 10 == 10
-  return jobs.value.slice(firstJobIndex, lastJobIndex);
+  return openingJobs.value.slice(firstJobIndex, lastJobIndex);
 });
 
 const previousPage = computed(() => {
@@ -80,7 +87,7 @@ const previousPage = computed(() => {
 
 const nextPage = computed(() => {
   const nextPageNumber = currentPageNumber.value + 1;
-  const maxPageNumber = Math.ceil(jobs.value.length / 10);
+  const maxPageNumber = Math.ceil(openingJobs.value.length / 10);
   return nextPageNumber <= maxPageNumber ? nextPageNumber : undefined;
 });
 </script>
