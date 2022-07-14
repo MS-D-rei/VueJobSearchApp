@@ -39,6 +39,7 @@ describe("JobSearchForm", () => {
       await locationInput.setValue("Tokyo");
 
       const submitButton = wrapper.find("[data-test='form-submit-button']");
+      // console.log(submitButton);
       await submitButton.trigger("click");
 
       expect(push).toHaveBeenCalledWith({
