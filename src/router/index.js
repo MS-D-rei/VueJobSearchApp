@@ -3,6 +3,7 @@ import HomeView from "@/views/HomeView.vue";
 
 const JobSearchResultsView = () => import("@/views/JobSearchResultsView.vue");
 const JobView = () => import("@/views/JobView.vue");
+const TeamsView = () => import("@/views/TeamsView.vue");
 
 // /* webpackChunkName: "jobs" */ is for making chunk of lazy loading in webpack, Not Vite.
 // const JobSearchResultsView = () => import(/* webpackChunkName: "jobs" */"@/views/JobSearchResultsView.vue");
@@ -19,6 +20,11 @@ const routes = [
     path: "/jobs/results/:id",
     name: "JobView",
     component: JobView,
+  },
+  {
+    path: "/teams",
+    name: "TeamsView",
+    component: TeamsView,
   },
 ];
 

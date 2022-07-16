@@ -50,7 +50,7 @@ import { storeToRefs } from "pinia";
 import { useLoginStore } from "@/store/store";
 
 const menuItems = [
-  { text: "Teams", url: "/" },
+  { text: "Teams", url: "/teams" },
   { text: "Locations", url: "/" },
   { text: "Life at Anonymous Careers", url: "/" },
   { text: "How we hire", url: "/" },
