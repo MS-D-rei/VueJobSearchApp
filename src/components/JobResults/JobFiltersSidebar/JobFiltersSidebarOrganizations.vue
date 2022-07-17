@@ -3,21 +3,21 @@
     <div class="mt-5">
       <fieldset>
         <ul class="flex flex-row flex-wrap">
-          <li class="w-1/2 h-8">
-            <input id="VueTube" type="checkbox" class="mr-3" />
-            <label for="VueTube">VueTube</label>
-          </li>
-          <li class="w-1/2 h-8">
-            <input id="Between Vue and Me" type="checkbox" class="mr-3" />
-            <label for="VueTube">Between Vue</label>
-          </li>
-          <li class="w-1/2 h-8">
-            <input id="Et Vue Brute" type="checkbox" class="mr-3" />
-            <label for="VueTube">Et Vue Brute</label>
-          </li>
-          <li class="w-1/2 h-8">
-            <input id="Vue and a Half Men" type="checkbox" class="mr-3" />
-            <label for="VueTube">Vue and a Half Men</label>
+          <li
+            v-for="organization of jobsStore.uniqueOrganizations"
+            :key="organization"
+            class="w-1/2 h-8"
+          >
+            <input
+              :id="organization"
+              v-model="selectedOrganizations"
+              :value="organization"
+              type="checkbox"
+              class="mr-3"
+            />
+            <label :for="organization" data-test="organization">{{
+              organization
+            }}</label>
           </li>
         </ul>
       </fieldset>
@@ -26,5 +26,15 @@
 </template>
 
 <script setup>
-import AccordionContainer from "@/components/Shared/AccordionContainer.vue"
+import AccordionContainer from "@/components/Shared/AccordionContainer.vue";
+import { useJobsStore } from "@/store/store";
+import { storeToRefs } from "pinia";
+
+const jobsStore = useJobsStore();
+const { selectedOrganizations } = storeToRefs(jobsStore)
+
+// function selectOrganization() {
+//   console.log(selectedOrganizations.value);
+// }
+
 </script>

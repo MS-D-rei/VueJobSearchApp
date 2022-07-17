@@ -11,6 +11,7 @@ import { mount, flushPromises, RouterLinkStub } from "@vue/test-utils";
 import { useRoute } from "vue-router";
 import { createPinia, setActivePinia } from "pinia";
 import { createTestingPinia } from "@pinia/testing";
+import { useJobsStore } from "@/store/store";
 
 import JobListings from "@/components/JobResults/JobListings.vue";
 
@@ -69,19 +70,22 @@ describe("JobListings", () => {
       ...createRoute({ page: "1" }),
     }));
     // jest.spyOn(axios, "get").mockResolvedValue({ data: Array(10).fill({}) });
-    const numberOfJobsData = 20;
+    const numberOfJobData = 20;
     const storeConfig = createStoreConfig({
       initialState: {
-        jobs: { openingJobs: Array(numberOfJobsData).fill({}) }
-      }
+        jobs: { openingJobs: Array(numberOfJobData).fill({}) },
+      },
     });
     const wrapper = mount(JobListings, stubJobListing(storeConfig));
+    const jobsStore = useJobsStore();
+    jobsStore.filteredJobs = Array(9).fill({});
     // // console.log(wrapper.html());
     await flushPromises(); // axios promise is resolved immediately
     // // console.log(wrapper.html());
     const jobListings = wrapper.findAll("[data-test='job-listing']");
-    expect(jobListings).toHaveLength(10);
+    expect(jobListings).toHaveLength(9);
     // axios.get.mockReset();
+    jobsStore.filteredJobs = undefined;
   });
 
   it("create a job listing for next 10 jobs", async () => {
@@ -89,19 +93,22 @@ describe("JobListings", () => {
       ...createRoute({ page: "2" }),
     }));
     // jest.spyOn(axios, "get").mockResolvedValue({ data: Array(20).fill({}) });
-    const numberOfJobsData = 20;
+    const numberOfJobData = 20;
     const storeConfig = createStoreConfig({
       initialState: {
-        jobs: { openingJobs: Array(numberOfJobsData).fill({}) },
+        jobs: { openingJobs: Array(numberOfJobData).fill({}) },
       },
     });
     const wrapper = mount(JobListings, stubJobListing(storeConfig));
+    const jobsStore = useJobsStore();
+    jobsStore.filteredJobs = Array(numberOfJobData).fill({});
     // console.log(wrapper.html());
     await flushPromises(); // axios promise is resolved immediately
     // console.log(wrapper.html());
     const jobListings = wrapper.findAll("[data-test='job-listing']");
     expect(jobListings).toHaveLength(10);
     // axios.get.mockReset();
+    jobsStore.filteredJobs = undefined;
   });
 
   describe("when params exclude page number", () => {
@@ -109,7 +116,7 @@ describe("JobListings", () => {
       useRoute.mockImplementationOnce(() => ({
         ...createRoute({ page: undefined }),
       }));
-      const storeConfig = createStoreConfig()
+      const storeConfig = createStoreConfig();
       const wrapper = mount(JobListings, stubJobListing(storeConfig));
       expect(wrapper.text()).toMatch("Page: 1");
     });
@@ -138,30 +145,36 @@ describe("JobListings", () => {
     // });
 
     it("does not show link to previous page", async () => {
-      const numberOfJobsData = 20;
+      const numberOfJobData = 20;
       const storeConfig = createStoreConfig({
         initialState: {
-          jobs: { openingJobs: Array(numberOfJobsData).fill({}) },
+          jobs: { openingJobs: Array(numberOfJobData).fill({}) },
         },
-      })
+      });
       const wrapper = mount(JobListings, stubJobListing(storeConfig));
+      const jobsStore = useJobsStore();
+      jobsStore.filteredJobs = Array(numberOfJobData).fill({});
       await flushPromises();
       const previousPage = wrapper.find("[data-test='previous-page-link']");
       expect(previousPage.exists()).toBe(false);
+      jobsStore.filteredJobs = undefined;
     });
 
     it("shows link to next page", async () => {
-      const numberOfJobsData = 20;
+      const numberOfJobData = 20;
       const storeConfig = createStoreConfig({
         initialState: {
-          jobs: { openingJobs: Array(numberOfJobsData).fill({}) },
+          jobs: { openingJobs: Array(numberOfJobData).fill({}) },
         },
-      })
+      });
       const wrapper = mount(JobListings, stubJobListing(storeConfig));
+      const jobsStore = useJobsStore();
+      jobsStore.filteredJobs = Array(numberOfJobData).fill({});
       await flushPromises();
       // console.log(wrapper.html());
       const nextPage = wrapper.find("[data-test='next-page-link']");
       expect(nextPage.exists()).toBe(true);
+      jobsStore.filteredJobs = undefined;
     });
   });
 
@@ -177,29 +190,35 @@ describe("JobListings", () => {
     });
 
     it("shows link to previous page", async () => {
-      const numberOfJobsData = 20;
+      const numberOfJobData = 20;
       const storeConfig = createStoreConfig({
         initialState: {
-          jobs: { openingJobs: Array(numberOfJobsData).fill({}) },
+          jobs: { openingJobs: Array(numberOfJobData).fill({}) },
         },
-      })
+      });
       const wrapper = mount(JobListings, stubJobListing(storeConfig));
+      const jobsStore = useJobsStore();
+      jobsStore.filteredJobs = Array(numberOfJobData).fill({});
       await flushPromises();
       const previousPage = wrapper.find("[data-test='previous-page-link']");
       expect(previousPage.exists()).toBe(true);
+      jobsStore.filteredJobs = undefined;
     });
 
     it("does not show link to next page", async () => {
-      const numberOfJobsData = 20;
+      const numberOfJobData = 20;
       const storeConfig = createStoreConfig({
         initialState: {
-          jobs: { openingJobs: Array(numberOfJobsData).fill({}) }
-        }
-      })
+          jobs: { openingJobs: Array(numberOfJobData).fill({}) },
+        },
+      });
       const wrapper = mount(JobListings, stubJobListing(storeConfig));
+      const jobsStore = useJobsStore();
+      jobsStore.filteredJobs = Array(numberOfJobData).fill({});
       await flushPromises();
       const nextPage = wrapper.find("[data-test='next-page-link']");
       expect(nextPage.exists()).toBe(false);
+      jobsStore.filteredJobs = undefined;
     });
   });
 });

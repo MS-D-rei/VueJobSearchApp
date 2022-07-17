@@ -37,14 +37,14 @@
 import JobListing from "@/components/JobResults/JobListing.vue";
 import { onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
-import { storeToRefs } from "pinia";
+// import { storeToRefs } from "pinia";
 import { useJobsStore } from "@/store/store";
 
 const route = useRoute();
 const jobsStore = useJobsStore();
 
 // const openingJobs = ref([]);
-const { openingJobs } = storeToRefs(jobsStore);
+// const { openingJobs } = storeToRefs(jobsStore);
 const { fetchJobs } = jobsStore;
 
 onMounted(async () => {
@@ -76,7 +76,7 @@ const displayedJobs = computed(() => {
   const pageNumber = currentPageNumber.value;
   const firstJobIndex = (pageNumber - 1) * 10; // page1 => (1 -1) * 10 == 0
   const lastJobIndex = pageNumber * 10; // page1 => 1 * 10 == 10
-  return openingJobs.value.slice(firstJobIndex, lastJobIndex);
+  return jobsStore.filteredJobs.slice(firstJobIndex, lastJobIndex);
 });
 
 const previousPage = computed(() => {
@@ -87,7 +87,7 @@ const previousPage = computed(() => {
 
 const nextPage = computed(() => {
   const nextPageNumber = currentPageNumber.value + 1;
-  const maxPageNumber = Math.ceil(openingJobs.value.length / 10);
+  const maxPageNumber = Math.ceil(jobsStore.filteredJobs.length / 10);
   return nextPageNumber <= maxPageNumber ? nextPageNumber : undefined;
 });
 </script>

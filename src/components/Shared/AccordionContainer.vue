@@ -10,7 +10,6 @@
     </div>
 
     <div v-if="isOpen" class="w-full mt-5">
-      <!-- Custom Content here for reusability -->
       <slot>Fallback contents</slot>
     </div>
   </div>
