@@ -12,9 +12,7 @@
 
       <AccordionContainer header="Fallback content"></AccordionContainer>
 
-      <AccordionContainer header="Job types">
-        <p>Placeholder for now</p>
-      </AccordionContainer>
+      <JobFiltersSidebarJobTypes />
 
       <JobFiltersSidebarOrganizations />
     </section>
@@ -25,6 +23,7 @@
 import ActionButton from "@/components/Shared/ActionButton.vue";
 import AccordionContainer from "@/components/Shared/AccordionContainer.vue"
 import JobFiltersSidebarOrganizations from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarOrganizations.vue"
+import JobFiltersSidebarJobTypes from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarJobTypes.vue"
 </script>
 
 <style scoped></style>

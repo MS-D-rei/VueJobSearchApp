@@ -1,25 +1,23 @@
 <template>
-  <AccordionContainer header="Organizations">
+  <AccordionContainer header="Job Types">
     <div class="mt-5">
       <fieldset>
         <ul class="flex flex-row flex-wrap">
           <li
-            v-for="organization of jobsStore.uniqueOrganizations"
-            :key="organization"
+            v-for="jobType of jobsStore.uniqueJobTypes"
+            :key="jobType"
             class="w-1/2 h-8"
           >
             <input
-              :id="organization"
-              v-model="selectedOrganizations"
-              :value="organization"
+              :id="jobType"
+              v-model="selectedJobTypes"
+              :value="jobType"
               type="checkbox"
               class="mr-3"
-              :data-test="organization"
+              :data-test="jobType"
               @change="backToFirstPage"
             />
-            <label :for="organization" data-test="organization">{{
-              organization
-            }}</label>
+            <label :for="jobType" data-test="job-type">{{ jobType }}</label>
           </li>
         </ul>
       </fieldset>
@@ -36,13 +34,11 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 const jobsStore = useJobsStore();
-const { selectedOrganizations } = storeToRefs(jobsStore);
+const { selectedJobTypes } = storeToRefs(jobsStore);
 
 function backToFirstPage() {
   router.push({ name: "JobSearchResults" });
 }
-
-// function selectOrganization() {
-//   console.log(selectedOrganizations.value);
-// }
 </script>
+
+<style scoped></style>

@@ -10,15 +10,20 @@
 
         <div class="flex flex-row align-middle">
           <div class="mr-5">
-            <span>{{ props.job.organization }}</span>
+            <span>Organization: {{ props.job.organization }}</span>
           </div>
 
           <div>
-            <ul>
-              <li v-for="location of props.job.locations" :key="location" class="inline-block mr-5">
+            <ul class="ml-5">
+              Locations:
+              <li v-for="location of props.job.locations" :key="location" class="inline-block ml-4">
                 {{ location }}
               </li>
             </ul>
+          </div>
+
+          <div class="ml-5">
+            <span>Job Type: {{ props.job.jobType }}</span>
           </div>
         </div>
       </div>

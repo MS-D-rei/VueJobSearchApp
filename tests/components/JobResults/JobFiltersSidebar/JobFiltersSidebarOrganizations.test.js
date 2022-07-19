@@ -8,6 +8,11 @@ import JobFiltersSidebarOrganizations from "@/components/JobResults/JobFiltersSi
 import { setActivePinia, createPinia } from "pinia";
 import { createTestingPinia } from "@pinia/testing";
 import { useJobsStore } from "@/store/store";
+import { useRouter } from "vue-router";
+
+jest.mock("vue-router", () => ({
+  useRouter: jest.fn(),
+}));
 
 beforeEach(() => {
   setActivePinia(createPinia());
@@ -27,17 +32,47 @@ describe("JobFiltersSidebarOrganizations", () => {
   it("renders unique list of organizations for filtering jobs", async () => {
     const wrapper = mount(JobFiltersSidebarOrganizations, createConfig());
     // after calling createTestingPinia(), we can configure store const jobsStore like below
-    const initialJobsStore = useJobsStore();
+    const jobsStore = useJobsStore();
     // getters are writable only in test // jobsStore.uniqueOrganization = Set(2) {"Google", "Amazon"};
-    initialJobsStore.uniqueOrganizations = new Set(["Google", "Amazon"]);
+    jobsStore.uniqueOrganizations = new Set(["Google", "Amazon"]);
     // console.log(initialJobsStore.uniqueOrganizations);
     const clickableArea = wrapper.find("[data-test='clickable-area']");
     await clickableArea.trigger("click");
     // console.log(wrapper.html());
     const organizationLabels = wrapper.findAll("[data-test='organization']");
-    const organization = organizationLabels.map((node) => node.text());
-    expect(organization).toEqual(["Google", "Amazon"]);
+    const organizations = organizationLabels.map((node) => node.text());
+    expect(organizations).toEqual(["Google", "Amazon"]);
     // set to undefined to reset the default behavior
-    initialJobsStore.uniqueOrganizations = undefined;
+    jobsStore.uniqueOrganizations = undefined;
+  });
+
+  it("when check organization, selectedOrganizations will includes it", async () => {
+    const push = jest.fn();
+    useRouter.mockImplementationOnce(() => ({
+      push,
+    }));
+    const wrapper = mount(JobFiltersSidebarOrganizations, createConfig());
+    const jobsStore = useJobsStore();
+    jobsStore.uniqueOrganizations = new Set(["Google", "Amazon"]);
+    const clickableArea = wrapper.find("[data-test='clickable-area']");
+    await clickableArea.trigger("click");
+    const googleInput = wrapper.find("[data-test='Google']");
+    await googleInput.setChecked();
+    expect(jobsStore.selectedOrganizations).toEqual(["Google"]);
+  });
+
+  it("when check organization, go back to first page to see flesh filteredJobs", async () => {
+    const push = jest.fn();
+    useRouter.mockImplementationOnce(() => ({
+      push,
+    }));
+    const wrapper = mount(JobFiltersSidebarOrganizations, createConfig());
+    const jobsStore = useJobsStore();
+    jobsStore.uniqueOrganizations = new Set(["Google", "Amazon"]);
+    const clickableArea = wrapper.find("[data-test='clickable-area']");
+    await clickableArea.trigger("click");
+    const googleInput = wrapper.find("[data-test='Google']");
+    await googleInput.setChecked();
+    expect(push).toHaveBeenCalledWith({ name: "JobSearchResults" });
   });
 });
