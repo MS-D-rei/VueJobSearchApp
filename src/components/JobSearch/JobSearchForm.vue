@@ -52,14 +52,6 @@ const router = useRouter();
 const role = ref("");
 const location = ref("");
 
-// function updateRole($event) {
-//   role.value = $event.target.value;
-// }
-
-// function updateLocation($event) {
-//   location.value = $event.target.value;
-// }
-
 function searchForJob() {
   router.push({
     name: "JobSearchResults",

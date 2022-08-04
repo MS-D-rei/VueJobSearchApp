@@ -7,20 +7,19 @@
 // when logged in, shows jobsStore.filetedJobs count correctly.
 // when logged out, doesn't show jobs count.
 // jobsStore => store.test.js, so mock it.
+// routeName check => useConfirmRoute.test.js
 
 import { flushPromises, mount } from "@vue/test-utils";
 import SubNav from "@/components/Navigation/SubNav";
-import { useRoute } from "vue-router";
 import { setActivePinia, createPinia } from "pinia";
 import { createTestingPinia } from "@pinia/testing";
 import { useJobsStore } from "@/store/store"
+import useConfirmRoute from "@/composables/useConfirmRoute"
 
 // vue-utils vue-router with Composition API
 // https://test-utils.vuejs.org/guide/advanced/vue-router.html#using-a-mocked-router-with-composition-api
 
-jest.mock("vue-router", () => ({
-  useRoute: jest.fn(),
-}));
+jest.mock("@/composables/useConfirmRoute")
 
 beforeEach(() => {
   setActivePinia(createPinia());
@@ -55,10 +54,13 @@ describe("SubNav", () => {
       //     };
       //   },
       // });
-      const routeName = "JobSearchResults";
-      useRoute.mockImplementationOnce(() => ({
-        name: routeName,
-      }));
+
+      // const routeName = "JobSearchResults";
+      // useRoute.mockImplementationOnce(() => ({
+      //   name: routeName,
+      // }));
+      // when user is on job page, useConfirmRoute returns true
+      useConfirmRoute.mockReturnValue(true);
       const wrapper = mount(SubNav, createConfig());
       // mock jobsStore.filteredJobs
       const numberOfFilteredJobs = 2;
@@ -91,10 +93,13 @@ describe("SubNav", () => {
       //   //   };
       //   // },
       // });
-      const routeName = "Home";
-      useRoute.mockImplementationOnce(() => ({
-        name: routeName,
-      }));
+
+      // const routeName = "Home";
+      // useRoute.mockImplementationOnce(() => ({
+      //   name: routeName,
+      // }));
+      // when user is not on job page, useConfirmRoute returns false
+      useConfirmRoute.mockReturnValue(false);
       const wrapper = mount(SubNav, createConfig());
       const jobCount = wrapper.find("[data-test='job-count']");
       expect(jobCount.exists()).toBe(false);
