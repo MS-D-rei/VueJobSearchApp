@@ -12,18 +12,31 @@
 
       <AccordionContainer header="Fallback content"></AccordionContainer>
 
-      <JobFiltersSidebarJobTypes />
+      <!-- <JobFiltersSidebarJobTypes /> -->
+      <JobFiltersSidebarCheckboxGroup
+        header="Job Types"
+        :group="jobsStore.uniqueJobTypes"
+        model-name="selectedJobTypes"
+      />
 
-      <JobFiltersSidebarOrganizations />
+      <JobFiltersSidebarCheckboxGroup
+        header="Organizations"
+        :group="jobsStore.uniqueOrganizations"
+        model-name="selectedOrganizations"
+      />
     </section>
   </div>
 </template>
 
 <script setup>
 import ActionButton from "@/components/Shared/ActionButton.vue";
-import AccordionContainer from "@/components/Shared/AccordionContainer.vue"
-import JobFiltersSidebarOrganizations from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarOrganizations.vue"
-import JobFiltersSidebarJobTypes from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarJobTypes.vue"
+import AccordionContainer from "@/components/Shared/AccordionContainer.vue";
+// import JobFiltersSidebarOrganizations from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarOrganizations.vue"
+// import JobFiltersSidebarJobTypes from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarJobTypes.vue"
+import JobFiltersSidebarCheckboxGroup from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarCheckboxGroup.vue";
+import { useJobsStore } from "@/store/store";
+
+const jobsStore = useJobsStore();
 </script>
 
 <style scoped></style>

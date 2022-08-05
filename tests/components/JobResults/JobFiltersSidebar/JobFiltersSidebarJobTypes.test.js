@@ -45,7 +45,7 @@ describe("JobFiltersSidebarJobTypes", () => {
     jobsStore.uniqueJobTypes = undefined;
   });
 
-  it("when check job type, selectedJobType will include it", async () => {
+  it("when check job type, selectedJobTypes will include it", async () => {
     const push = jest.fn();
     useRouter.mockImplementationOnce(() => ({
       push,
