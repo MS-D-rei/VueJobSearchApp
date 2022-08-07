@@ -35,12 +35,14 @@
 <script setup>
 // import axios from "axios";
 import JobListing from "@/components/JobResults/JobListing.vue";
-import { onMounted, computed } from "vue";
-import { useRoute } from "vue-router";
+import { onMounted, computed, unref } from "vue";
+// import { useRoute } from "vue-router";
 // import { storeToRefs } from "pinia";
 import { useJobsStore } from "@/store/store";
+import useCurrentPage from "@/composables/useCurrentPage.js";
+import usePreviousAndNextPage from "@/composables/usePreviousAndNextPage"
 
-const route = useRoute();
+// const route = useRoute();
 const jobsStore = useJobsStore();
 
 // const openingJobs = ref([]);
@@ -67,28 +69,32 @@ onMounted(async () => {
   await fetchJobs();
 });
 
-const currentPageNumber = computed(() => {
-  const pageString = route.query.page || "1";
-  return Number.parseInt(pageString);
-});
+// const currentPageNumber = computed(() => {
+//   const pageString = route.query.page || "1";
+//   return Number.parseInt(pageString);
+// });
+const currentPageNumber = useCurrentPage();
+
+// const previousPage = computed(() => {
+//   const previousPageNumber = currentPageNumber.value - 1;
+//   const firstPageNumber = 1;
+//   return previousPageNumber >= firstPageNumber ? previousPageNumber : undefined;
+// });
+
+// const nextPage = computed(() => {
+//   const nextPageNumber = currentPageNumber.value + 1;
+//   const maxPageNumber = Math.ceil(jobsStore.filteredJobs.length / 10);
+//   return nextPageNumber <= maxPageNumber ? nextPageNumber : undefined;
+// });
+
+const maxPageNumber = computed(() => jobsStore.filteredJobs.length / 10);
+const { previousPage, nextPage } = usePreviousAndNextPage(currentPageNumber, maxPageNumber);
 
 const displayedJobs = computed(() => {
-  const pageNumber = currentPageNumber.value;
+  const pageNumber = unref(currentPageNumber);
   const firstJobIndex = (pageNumber - 1) * 10; // page1 => (1 -1) * 10 == 0
   const lastJobIndex = pageNumber * 10; // page1 => 1 * 10 == 10
   return jobsStore.filteredJobs.slice(firstJobIndex, lastJobIndex);
-});
-
-const previousPage = computed(() => {
-  const previousPageNumber = currentPageNumber.value - 1;
-  const firstPageNumber = 1;
-  return previousPageNumber >= firstPageNumber ? previousPageNumber : undefined;
-});
-
-const nextPage = computed(() => {
-  const nextPageNumber = currentPageNumber.value + 1;
-  const maxPageNumber = Math.ceil(jobsStore.filteredJobs.length / 10);
-  return nextPageNumber <= maxPageNumber ? nextPageNumber : undefined;
 });
 </script>
 

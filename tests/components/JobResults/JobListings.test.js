@@ -1,19 +1,25 @@
 /**
  * @jest-environment jsdom
  */
-
+/* eslint-disable jest/no-commented-out-tests */
 // Responsibility
 // store object by Pinia => store.test.js, then mock store
 // getJobs function from @/api/getJobs => getJobs.test.js, then mock getJobs with createTestingPinia
+// currentPageNumber => useCurrentPage.test.js
+// previousPage, nextPage => usePreviousAndNextPage.test.js
 
 // import axios from "axios";
 import { mount, flushPromises, RouterLinkStub } from "@vue/test-utils";
-import { useRoute } from "vue-router";
+// import { useRoute } from "vue-router";
 import { createPinia, setActivePinia } from "pinia";
 import { createTestingPinia } from "@pinia/testing";
 import { useJobsStore } from "@/store/store";
 
 import JobListings from "@/components/JobResults/JobListings.vue";
+import useCurrentPage from "@/composables/useCurrentPage";
+jest.mock("@/composables/useCurrentPage");
+import usePreviousAndNextPage from "@/composables/usePreviousAndNextPage";
+jest.mock("@/composables/usePreviousAndNextPage");
 
 jest.mock("vue-router", () => ({
   useRoute: jest.fn(),
@@ -34,12 +40,12 @@ describe("JobListings", () => {
     },
   });
 
-  const createRoute = (queryParams = {}) => ({
-    query: {
-      page: "1",
-      ...queryParams,
-    },
-  });
+  // const createRoute = (queryParams = {}) => ({
+  //   query: {
+  //     page: "1",
+  //     ...queryParams,
+  //   },
+  // });
 
   const createStoreConfig = (storeProps = {}) => ({
     stubActions: true,
@@ -66,9 +72,14 @@ describe("JobListings", () => {
   // });
 
   it("create a job listing for first 10 jobs", async () => {
-    useRoute.mockImplementationOnce(() => ({
-      ...createRoute({ page: "1" }),
-    }));
+    // useRoute.mockImplementationOnce(() => ({
+    //   ...createRoute({ page: "1" }),
+    // }));
+    useCurrentPage.mockReturnValue(1);
+    usePreviousAndNextPage.mockReturnValue(
+      { previousPage: undefined },
+      { nextPage: 2 }
+    );
     // jest.spyOn(axios, "get").mockResolvedValue({ data: Array(10).fill({}) });
     const numberOfJobData = 20;
     const storeConfig = createStoreConfig({
@@ -78,20 +89,25 @@ describe("JobListings", () => {
     });
     const wrapper = mount(JobListings, stubJobListing(storeConfig));
     const jobsStore = useJobsStore();
-    jobsStore.filteredJobs = Array(9).fill({});
+    jobsStore.filteredJobs = Array(10).fill({});
     // // console.log(wrapper.html());
     await flushPromises(); // axios promise is resolved immediately
     // // console.log(wrapper.html());
     const jobListings = wrapper.findAll("[data-test='job-listing']");
-    expect(jobListings).toHaveLength(9);
+    expect(jobListings).toHaveLength(10);
     // axios.get.mockReset();
     jobsStore.filteredJobs = undefined;
   });
 
   it("create a job listing for next 10 jobs", async () => {
-    useRoute.mockImplementationOnce(() => ({
-      ...createRoute({ page: "2" }),
-    }));
+    // useRoute.mockImplementationOnce(() => ({
+    //   ...createRoute({ page: "2" }),
+    // }));
+    useCurrentPage.mockReturnValue(2);
+    usePreviousAndNextPage.mockReturnValue(
+      { previousPage: 1 },
+      { nextPage: undefined }
+    );
     // jest.spyOn(axios, "get").mockResolvedValue({ data: Array(20).fill({}) });
     const numberOfJobData = 20;
     const storeConfig = createStoreConfig({
@@ -111,32 +127,37 @@ describe("JobListings", () => {
     jobsStore.filteredJobs = undefined;
   });
 
-  describe("when params exclude page number", () => {
-    it("display page No.1", () => {
-      useRoute.mockImplementationOnce(() => ({
-        ...createRoute({ page: undefined }),
-      }));
-      const storeConfig = createStoreConfig();
-      const wrapper = mount(JobListings, stubJobListing(storeConfig));
-      expect(wrapper.text()).toMatch("Page: 1");
-    });
-  });
-
-  describe("when params include page number", () => {
-    it("display page number", () => {
-      useRoute.mockImplementationOnce(() => ({
-        ...createRoute({ page: 3 }),
-      }));
-      const wrapper = mount(JobListings, stubJobListing());
-      expect(wrapper.text()).toMatch("Page: 3");
-    });
-  });
+  // Move to useCurrentPage.test.js
+  // describe("when params exclude page number", () => {
+  //   it("display page No.1", () => {
+  //     useRoute.mockImplementationOnce(() => ({
+  //       ...createRoute({ page: undefined }),
+  //     }));
+  //     const storeConfig = createStoreConfig();
+  //     const wrapper = mount(JobListings, stubJobListing(storeConfig));
+  //     expect(wrapper.text()).toMatch("Page: 1");
+  //   });
+  // });
+  // describe("when params include page number", () => {
+  //   it("display page number", () => {
+  //     useRoute.mockImplementationOnce(() => ({
+  //       ...createRoute({ page: 3 }),
+  //     }));
+  //     const wrapper = mount(JobListings, stubJobListing());
+  //     expect(wrapper.text()).toMatch("Page: 3");
+  //   });
+  // });
 
   describe("when user is on first page of job results", () => {
     beforeEach(() => {
-      useRoute.mockImplementationOnce(() => ({
-        ...createRoute({ page: 1 }),
-      }));
+      // useRoute.mockImplementationOnce(() => ({
+      //   ...createRoute({ page: 1 }),
+      // }));
+      useCurrentPage.mockReturnValue(1);
+      usePreviousAndNextPage.mockReturnValue({
+        previousPage: undefined,
+        nextPage: 2,
+      });
       // jest.spyOn(axios, "get").mockResolvedValue({ data: Array(20).fill({}) });
     });
 
@@ -171,7 +192,6 @@ describe("JobListings", () => {
       const jobsStore = useJobsStore();
       jobsStore.filteredJobs = Array(numberOfJobData).fill({});
       await flushPromises();
-      // console.log(wrapper.html());
       const nextPage = wrapper.find("[data-test='next-page-link']");
       expect(nextPage.exists()).toBe(true);
       jobsStore.filteredJobs = undefined;
@@ -180,9 +200,14 @@ describe("JobListings", () => {
 
   describe("when user is on last page of job results", () => {
     beforeEach(() => {
-      useRoute.mockImplementationOnce(() => ({
-        ...createRoute({ page: 2 }),
-      }));
+      // useRoute.mockImplementationOnce(() => ({
+      //   ...createRoute({ page: 2 }),
+      // }));
+      useCurrentPage.mockReturnValue(2);
+      usePreviousAndNextPage.mockReturnValue({
+        previousPage: 1,
+        nextPage: undefined,
+      });
       // jest.spyOn(axios, "get").mockResolvedValue({ data: Array(20).fill({}) });
     });
     afterEach(() => {
