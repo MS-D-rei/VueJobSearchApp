@@ -5,8 +5,12 @@
 import { setActivePinia, createPinia } from "pinia";
 import { useLoginStore, useJobsStore } from "@/store/store";
 import getJobs from "@/api/getJobs";
+import { Job } from "@/api/types"
+import { jest } from "@jest/globals"
 
 jest.mock("@/api/getJobs");
+
+const mockGetJobs = getJobs as jest.Mock;
 
 describe("User login state", () => {
   beforeEach(() => {
@@ -33,8 +37,8 @@ describe("Jobs Store", () => {
   describe("Jobs Store State", () => {
     it("store opening jobs state", () => {
       const jobsStore = useJobsStore();
-      const sampleJobData = [{ id: "1", title: "Vue Developer" }];
-      jobsStore.openingJobs = sampleJobData;
+      const sampleJobData = [{ id: 1, title: "Vue Developer" }];
+      jobsStore.openingJobs = sampleJobData as unknown as Job[];
       expect(jobsStore.openingJobs).toEqual(sampleJobData);
     });
 
@@ -59,7 +63,7 @@ describe("Jobs Store", () => {
           { organization: "Google" },
         ],
       };
-      jobsStore.openingJobs = sampleJobData.jobs;
+      jobsStore.openingJobs = sampleJobData.jobs as unknown as Job[];
       // console.log(initialJobsStore.openingJobs);
       // console.log(initialJobsStore.uniqueOrganizations);
       expect(jobsStore.uniqueOrganizations).toEqual(
@@ -76,7 +80,7 @@ describe("Jobs Store", () => {
           { jobType: "Part-time" },
         ],
       };
-      jobsStore.openingJobs = sampleJobData.jobs;
+      jobsStore.openingJobs = sampleJobData.jobs as unknown as Job[];
       expect(jobsStore.uniqueJobTypes).toEqual(
         new Set(["Full-time", "Part-time"])
       );
@@ -94,16 +98,16 @@ describe("Jobs Store", () => {
       describe("computes jobsIncludeOrganization", () => {
         it("when no selected organization, includes all jobs", () => {
           const jobsStore = useJobsStore();
-          jobsStore.openingJobs = sampleJobData.jobs;
+          jobsStore.openingJobs = sampleJobData.jobs as unknown as Job[];
           jobsStore.selectedOrganizations = [];
-          const oneOfOpeningJobs = { organization: "Google" };
+          const oneOfOpeningJobs = { organization: "Google" } as unknown as Job;
           expect(jobsStore.jobIncludesOrganization(oneOfOpeningJobs)).toBe(true);
         });
         it("when at least one organization selected, filter openingJobs with it", () => {
           const jobsStore = useJobsStore();
-          jobsStore.openingJobs = sampleJobData.jobs;
+          jobsStore.openingJobs = sampleJobData.jobs as unknown as Job[];
           jobsStore.selectedOrganizations = ["Google", "Amazon"];
-          const oneOfOpeningJobs = { organization: "Google" };
+          const oneOfOpeningJobs = { organization: "Google" } as unknown as Job;
           expect(jobsStore.jobIncludesOrganization(oneOfOpeningJobs)).toEqual(true);
         });
       });
@@ -111,23 +115,23 @@ describe("Jobs Store", () => {
       describe("compute jobsIncludeJobType", () => {
         it("when no selected jobType, includes all jobs", () => {
           const jobsStore = useJobsStore();
-          jobsStore.openingJobs = sampleJobData.jobs;
+          jobsStore.openingJobs = sampleJobData.jobs as unknown as Job[];
           jobsStore.selectedJobTypes = [];
-          const oneOfJobs = { jobType: "Full-time" };
+          const oneOfJobs = { jobType: "Full-time" } as unknown as Job;
           expect(jobsStore.jobIncludesJobType(oneOfJobs)).toBe(true);
         });
         it("when at least one jobType selected, filter openingJobs with it", () => {
           const jobsStore = useJobsStore();
-          jobsStore.openingJobs = sampleJobData.jobs;
+          jobsStore.openingJobs = sampleJobData.jobs as unknown as Job[];
           jobsStore.selectedJobTypes = ["Full-time", "Part-time"];
-          const oneOfOpeningJobs = { jobType: "Full-time" };
+          const oneOfOpeningJobs = { jobType: "Full-time" } as unknown as Job;
           expect(jobsStore.jobIncludesJobType(oneOfOpeningJobs)).toEqual(true);
         });
       });
 
       it("when no selection, return all openingJobs", () => {
         const jobsStore = useJobsStore();
-        jobsStore.openingJobs = sampleJobData.jobs;
+        jobsStore.openingJobs = sampleJobData.jobs as unknown as Job[];
         jobsStore.selectedOrganizations = [];
         jobsStore.selectedJobTypes = [];
         expect(jobsStore.filteredJobs).toEqual(jobsStore.openingJobs);
@@ -135,7 +139,7 @@ describe("Jobs Store", () => {
 
       it("when no selected job types, filteredJobs filtered with uniqueOrganizations", () => {
         const jobsStore = useJobsStore();
-        jobsStore.openingJobs = sampleJobData.jobs;
+        jobsStore.openingJobs = sampleJobData.jobs as unknown as Job[];
         jobsStore.selectedOrganizations = ["Google", "Microsoft"];
         jobsStore.selectedJobTypes = [];
         expect(jobsStore.filteredJobs).toEqual([
@@ -146,7 +150,7 @@ describe("Jobs Store", () => {
 
       it("when no selected organizations, filteredJobs filtered with selectedJobTypes", () => {
         const jobsStore = useJobsStore();
-        jobsStore.openingJobs = sampleJobData.jobs;
+        jobsStore.openingJobs = sampleJobData.jobs as unknown as Job[];
         jobsStore.selectedOrganizations = [];
         jobsStore.selectedJobTypes = ["Full-time", "Part-time"];
         expect(jobsStore.filteredJobs).toEqual([
@@ -165,8 +169,8 @@ describe("Jobs Store", () => {
           id: 1,
           title: "React Developer",
         },
-      ];
-      getJobs.mockResolvedValue(mockJobData);
+      ] as unknown as Job;
+      mockGetJobs.mockResolvedValue(mockJobData);
       await jobsStore.fetchJobs();
       expect(jobsStore.openingJobs).toEqual(mockJobData);
     });

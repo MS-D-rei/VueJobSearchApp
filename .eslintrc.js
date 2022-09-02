@@ -6,22 +6,17 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:vue/vue3-recommended',
-    "plugin:@typescript-eslint/recommended",
     'prettier',
   ],
   // TypeScript ESLint Project
   //https://github.com/typescript-eslint/typescript-eslint
   // TypeScript ESLint Plugin
   // https://github.com/typescript-eslint/typescript-eslint/tree/main/packages/eslint-plugin
-  parser: "@typescript-eslint/parser",
-  parserOptions: {
-    project: ["./tsconfig.json"],
-  },
-  plugins: ["@typescript-eslint"],
   rules: {
     // "@typescript-eslint/rule-name": "error"
   },
   overrides: [
+    // For Jest
     {
       files: [
         "**/__tests__/**/*.[jt]s?(x)",
@@ -33,6 +28,20 @@ module.exports = {
       },
       plugins: ["jest"],
       extends: ["plugin:jest/recommended"]
+    },
+    // For TypeScript to avoid annoying notification on JavaScript
+    {
+      files: [
+        '*.ts', '*.tsx'
+      ],
+      extends: [
+        'eslint:recommended', "plugin:@typescript-eslint/recommended", 'prettier'
+      ],
+      parserOptions: {
+        project: ["./tsconfig.json"],
+      },
+      plugins: ["@typescript-eslint"],
+      parser: "@typescript-eslint/parser",
     }
   ],
 }

@@ -3,6 +3,8 @@
  * https://jestjs.io/docs/configuration
  */
 
+/** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
+
 module.exports = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
@@ -181,7 +183,10 @@ module.exports = {
   transform: {
     "^.+\\.vue$": "@vue/vue3-jest",
     // "^.+\\.[t|j]sx?$": ["@swc/jest"],
-    "^.+\\.[t|j]sx?$": "babel-jest",
+    // "^.+\\.[t|j]sx?$": "ts-jest",
+    "^.+\\.jsx?$": "babel-jest",
+    "^.+\\.tsx?$": "ts-jest",
+    // "^.+\\.tsx?$": ["@swc/jest"],
     "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/fileTransformer.js"
   },
 

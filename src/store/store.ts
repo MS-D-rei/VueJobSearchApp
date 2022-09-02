@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
 import getJobs from "@/api/getJobs";
+import { JobState } from "@/store/types";
+import { Job } from "@/api/types";
 
 export const useLoginStore = defineStore("login", {
   state: () => ({
@@ -13,36 +15,36 @@ export const useLoginStore = defineStore("login", {
 });
 
 export const useJobsStore = defineStore("jobs", {
-  state: () => ({
+  state: (): JobState => ({
     openingJobs: [],
     selectedOrganizations: [],
     selectedJobTypes: [],
   }),
   getters: {
-    uniqueOrganizations: (state) => {
-      const uniqueOrganizations = new Set();
+    uniqueOrganizations: (state: JobState):Set<string> => {
+      const uniqueOrganizations: Set<string> = new Set();
       state.openingJobs.forEach((job) => {
         // console.log(job.organization);
         uniqueOrganizations.add(job.organization);
       });
       return uniqueOrganizations;
     },
-    uniqueJobTypes: (state) => {
-      const uniqueJobTypes = new Set();
+    uniqueJobTypes: (state: JobState): Set<string> => {
+      const uniqueJobTypes: Set<string> = new Set();
       state.openingJobs.forEach((job) => {
         uniqueJobTypes.add(job.jobType);
       });
       return uniqueJobTypes;
     },
-    jobIncludesOrganization: (state) => (job) => {
+    jobIncludesOrganization: (state: JobState) => (job: Job) => {
       if (state.selectedOrganizations.length === 0) return true;
       return state.selectedOrganizations.includes(job.organization); // return function
     },
-    jobIncludesJobType: (state) => (job) => {
+    jobIncludesJobType: (state: JobState) => (job: Job) => {
       if (state.selectedJobTypes.length === 0) return true;
       return state.selectedJobTypes.includes(job.jobType);
     },
-    filteredJobs: function (state) {
+    filteredJobs: function (state: JobState): Job[] {
       // if (
       //   state.selectedOrganizations.length === 0 &&
       //   state.selectedJobTypes.length === 0
