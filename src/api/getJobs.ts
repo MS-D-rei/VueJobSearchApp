@@ -6,10 +6,12 @@ import axios from "axios";
 // https://vitejs.dev/guide/env-and-mode.html
 
 const getJobs = async () => {
-  try { 
-    const apiUrl: string = import.meta.env.VITE_API_URL
-    const response = await axios.get(`${apiUrl}/jobs`);
-    return response.data;
+  try {
+    if (process.env.VITE_API_URL) {
+      const apiUrl: string = process.env.VITE_API_URL;
+      const response = await axios.get(`${apiUrl}/jobs`);
+      return response.data;
+    }
   } catch (err) {
     if (err instanceof Error) {
       console.log(err);

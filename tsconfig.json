@@ -102,5 +102,5 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
-  "include": ["./src/**/*.ts", "./src/**/*.tsx", "./src/**/*.vue", "./tests/**/*.ts", "./tests/**/*.tsx"],
+  "include": ["./vite.config.ts", "./src/**/*.ts", "./src/**/*.tsx", "./src/**/*.vue", "./tests/**/*.ts", "./tests/**/*.tsx"],
 }
