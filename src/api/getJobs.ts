@@ -20,4 +20,5 @@ const getJobs = async () => {
     }
   }
 }
+
 export default getJobs;

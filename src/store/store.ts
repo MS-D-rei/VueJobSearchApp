@@ -22,7 +22,7 @@ export const useJobsStore = defineStore("jobs", {
   }),
   getters: {
     uniqueOrganizations: (state: JobState):Set<string> => {
-      const uniqueOrganizations: Set<string> = new Set();
+      const uniqueOrganizations = new Set<string>();
       state.openingJobs.forEach((job) => {
         // console.log(job.organization);
         uniqueOrganizations.add(job.organization);
@@ -38,7 +38,7 @@ export const useJobsStore = defineStore("jobs", {
     },
     jobIncludesOrganization: (state: JobState) => (job: Job) => {
       if (state.selectedOrganizations.length === 0) return true;
-      return state.selectedOrganizations.includes(job.organization); // return function
+      return state.selectedOrganizations.includes(job.organization);
     },
     jobIncludesJobType: (state: JobState) => (job: Job) => {
       if (state.selectedJobTypes.length === 0) return true;

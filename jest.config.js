@@ -132,7 +132,7 @@ module.exports = {
   // A list of paths to directories that Jest should use to search for files in
   roots: [
     "<rootDir>/src/",
-    "<rootDir>/tests/"
+    "<rootDir>/tests/",
   ],
 
   // Allows you to use a custom runner instead of Jest's default test runner
@@ -187,6 +187,7 @@ module.exports = {
     "^.+\\.jsx?$": "babel-jest",
     "^.+\\.tsx?$": "ts-jest",
     // "^.+\\.tsx?$": ["@swc/jest"],
+    // "^.+\\.tsx?$": "jest-esbuild", 
     "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/fileTransformer.js"
   },
 
