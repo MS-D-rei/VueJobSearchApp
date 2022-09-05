@@ -5,15 +5,17 @@
 import { mount, flushPromises } from "@vue/test-utils";
 import axios from "axios";
 
-import JobSpotlight from "@/components/JobSearch/JobSpotlight.vue";
+import JobSpotlight from "@/components/JobSearch/JobSpotlight.vue" 
 
 jest.mock("axios");
+const mockAxios = axios as jest.Mocked<typeof axios>;
 
 describe("JobSpotlight", () => {
   const mockSpotlightResponse = (data = {}) => {
-    axios.get.mockResolvedValue({
+    mockAxios.get.mockResolvedValue({
       data: [
         {
+          id: 1,
           img: "sampleSpotlight img",
           title: "sampleSpotlight title",
           description: "sampleSpotlight description",
@@ -26,7 +28,8 @@ describe("JobSpotlight", () => {
   it("provides img attribute to parent component", async () => {
     const data = { img: "Sample img" };
     mockSpotlightResponse(data);
-    const wrapper = mount(JobSpotlight, {
+    // FIX: JobSpotlight occurs no overload error on mount function.
+    const wrapper = mount(JobSpotlight as any, {
       slots: {
         default: `<template #default="slotProps">
         <h1>{{ slotProps.img }}</h1>
@@ -40,7 +43,8 @@ describe("JobSpotlight", () => {
   it("provides title attribute to parent component", async () => {
     const data = { title: "sampleSpotlight title" }
     mockSpotlightResponse(data);
-    const wrapper = mount(JobSpotlight, {
+    // FIX: JobSpotlight occurs no overload error on mount function.
+    const wrapper = mount(JobSpotlight as any, {
       slots: {
         default: `<template #default="slotProps">
         <h1>{{ slotProps.title }}</h1>
@@ -54,7 +58,8 @@ describe("JobSpotlight", () => {
   it("provides description attribute to parent component", async () => {
     const data = { description: "sampleSpotlight description" };
     mockSpotlightResponse(data);
-    const wrapper = mount(JobSpotlight, {
+    // FIX: JobSpotlight occurs no overload error on mount function.
+    const wrapper = mount(JobSpotlight as any, {
       slots: {
         default: `<template #default="slotProps">
         <h1>{{ slotProps.description }}</h1>

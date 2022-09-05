@@ -75,7 +75,9 @@ export const useJobsStore = defineStore("jobs", {
   actions: {
     async fetchJobs() {
       const jobData = await getJobs();
-      this.openingJobs = jobData;
+      if (jobData) {
+        this.openingJobs = jobData;
+      }
     },
   },
 });

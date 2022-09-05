@@ -10,11 +10,12 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, ref, computed, Ref } from "vue";
+import { onBeforeUnmount, ref, computed } from "vue";
 import nextElementInList from "@/utils/nextElementInList";
 
 const action = ref("Build");
-const interval: Ref<NodeJS.Timer> | Ref<undefined> = ref(undefined);
+// const interval: Ref<NodeJS.Timer> | Ref<undefined> = ref(undefined);
+const interval = ref<NodeJS.Timer | undefined>(undefined);
 
 changeTitle();
 
