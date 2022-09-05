@@ -124,7 +124,7 @@ describe("MainNav", () => {
       // const initialLoginStore = useLoginStore();
       // console.log(initialLoginStore);
       // console.log(wrapper.html());
-      let profileImage = wrapper.find("[data-test='profile-image']");
+      const profileImage = wrapper.find("[data-test='profile-image']");
       expect(profileImage.exists()).toBe(true);
     });
     it("displays subnavigation menu with additional information", () => {
@@ -133,7 +133,7 @@ describe("MainNav", () => {
       // expect(subnav.exists()).toBe(false);
       // const loginButton = wrapper.find("[data-test='login-button']");
       // await loginButton.trigger("click");
-      let subnav = wrapper.find("[data-test='subnav']");
+      const subnav = wrapper.find("[data-test='subnav']");
       expect(subnav.exists()).toBe(true);
     });
   });

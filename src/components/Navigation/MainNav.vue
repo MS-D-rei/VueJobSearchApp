@@ -41,7 +41,7 @@
   </header>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue";
 import ActionButton from "@/components/Shared/ActionButton.vue";
 import ProfileImage from "@/components/Navigation/ProfileImage.vue";

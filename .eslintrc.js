@@ -3,11 +3,19 @@ module.exports = {
   env: {
     node: true,
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:vue/vue3-recommended',
-    'prettier',
-  ],
+  globals: {
+    // For avoiding notification, "NodeJS is not undefined"
+    NodeJS: true,
+  },
+  // eslint-plugin-vue Guide
+  // https://eslint.vuejs.org/user-guide/#installation
+  // => check the topic, "How to use a custom parser?"
+  extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', 'prettier'],
+  parser: 'vue-eslint-parser',
+  parserOptions: {
+    parser: '@typescript-eslint/parser',
+  },
+  plugins: ['vue'],
   // TypeScript ESLint Project
   //https://github.com/typescript-eslint/typescript-eslint
   // TypeScript ESLint Plugin
@@ -19,29 +27,28 @@ module.exports = {
     // For Jest
     {
       files: [
-        "**/__tests__/**/*.[jt]s?(x)",
-        "**/?(*.)+(spec|test).[tj]s?(x)",
+        '**/__tests__/**/*.[jt]s?(x)',
+        '**/?(*.)+(spec|test).[tj]s?(x)',
         // "test/**",
       ],
       env: {
-        "jest/globals": true,
+        'jest/globals': true,
       },
-      plugins: ["jest"],
-      extends: ["plugin:jest/recommended"]
+      plugins: ['jest'],
+      extends: ['plugin:jest/recommended'],
     },
     // For TypeScript to avoid annoying notification on JavaScript
     {
-      files: [
-        '*.ts', '*.tsx'
-      ],
+      files: ['*.ts', '*.tsx'],
       extends: [
-        'eslint:recommended', "plugin:@typescript-eslint/recommended", 'prettier'
+        'eslint:recommended',
+        'plugin:@typescript-eslint/recommended',
+        'prettier',
       ],
       parserOptions: {
-        project: ["./tsconfig.json"],
+        project: ['./tsconfig.json'],
       },
-      plugins: ["@typescript-eslint"],
-      parser: "@typescript-eslint/parser",
-    }
+      plugins: ['@typescript-eslint'],
+    },
   ],
-}
+};

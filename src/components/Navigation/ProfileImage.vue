@@ -6,7 +6,7 @@
   />
 </template>
 
-<script setup>
+<script setup lang="ts">
 import profileImageUrl from "@/assets/toon-link-face-png-transparent.png";
 </script>
 

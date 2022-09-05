@@ -9,17 +9,17 @@
   </section>
 </template>
 
-<script setup>
-import { onBeforeUnmount, ref, computed } from "vue";
+<script setup lang="ts">
+import { onBeforeUnmount, ref, computed, Ref } from "vue";
 import nextElementInList from "@/utils/nextElementInList";
 
 const action = ref("Build");
-const interval = ref(null);
+const interval: Ref<NodeJS.Timer> | Ref<undefined> = ref(undefined);
 
 changeTitle();
 
 onBeforeUnmount(() => {
-  clearInterval(interval);
+  clearInterval(interval.value);
 });
 
 function changeTitle() {
