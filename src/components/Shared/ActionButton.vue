@@ -4,7 +4,7 @@
   </button>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue";
 
 const props = defineProps({
@@ -16,7 +16,7 @@ const props = defineProps({
     type: String,
     required: false,
     default: "",
-    validator(value) {
+    validator(value: string) {
       return ["sign-in", "search"].includes(value);
     },
   },

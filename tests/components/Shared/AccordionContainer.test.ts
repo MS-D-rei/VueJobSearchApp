@@ -16,7 +16,7 @@ describe("AccordionContainer", () => {
     ...slots
   })
 
-  const createConfig = (propsConfig, slotsConfig) => ({
+  const createConfig = (propsConfig: { header: string }, slotsConfig: { default?: string }) => ({
     global: {
       stubs: {
         'FontAwesomeIcon': true,
