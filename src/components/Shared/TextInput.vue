@@ -8,7 +8,7 @@
   />
 </template>
 
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
   placeholder: {
     type: String,
@@ -23,9 +23,10 @@ const props = defineProps({
 
 const emits = defineEmits(["update:inputValue"]);
 
-function handleInput($event) {
+function handleInput($event: Event) {
+  const target = $event.target as HTMLInputElement
   // emit(eventName, args(payload))
-  emits("update:inputValue", $event.target.value);
+  emits("update:inputValue", target.value);
 }
 </script>
 

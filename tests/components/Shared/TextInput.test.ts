@@ -3,7 +3,7 @@
  */
 
 import { mount } from "@vue/test-utils";
-import TextInput from "@/components/Shared/TextInput";
+import TextInput from "@/components/Shared/TextInput.vue";
 
 describe("TextInput", () => {
   it("communicates that user has entered character", () => {
@@ -20,6 +20,8 @@ describe("TextInput", () => {
     // console.log(wrapper.emitted());
     input.setValue("C");
     // console.log(wrapper.emitted());
+    // vue test-utils emitted
+    // https://test-utils.vuejs.org/api/#emitted
     const message = wrapper.emitted()['update:inputValue'];
     expect(message).toEqual([['N'], ['Y'], ['C']]);
   });

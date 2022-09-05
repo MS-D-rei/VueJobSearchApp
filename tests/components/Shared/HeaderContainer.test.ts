@@ -3,7 +3,7 @@
  */
 
 import { mount } from "@vue/test-utils";
-import HeaderContainer from "@/components/Shared/HeaderContainer";
+import HeaderContainer from "@/components/Shared/HeaderContainer.vue";
 
 describe("HeaderContainer", () => {
   const createSlotsConfig = (slots = {}) => ({
@@ -12,7 +12,7 @@ describe("HeaderContainer", () => {
     ...slots,
   });
 
-  const createConfig = (slotsConfig) => ({
+  const createConfig = (slotsConfig: { title: string, subtitle: string }) => ({
     slots: {
       ...slotsConfig,
     }
