@@ -5,9 +5,11 @@ jest.mock('vue-router', () => ({
   useRoute: jest.fn(),
 }));
 
+const mockUseRoute = useRoute as jest.Mock;
+
 describe("useConfirmRoute", () => {
   it("return true if the specific route name matches with current route name", () => {
-    useRoute.mockImplementationOnce(() => ({
+    mockUseRoute.mockImplementationOnce(() => ({
       name: "Home",
     }))
     const specificRouteName = "Home";

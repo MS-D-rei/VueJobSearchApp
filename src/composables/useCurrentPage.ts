@@ -3,7 +3,8 @@ import { useRoute } from "vue-router";
 
 const useCurrentPage = () => {
   const route = useRoute();
-  return computed(() => Number.parseInt(route.query.page || "1"));
+  const routeQueryPage = route.query.page as string;
+  return computed(() => Number.parseInt(routeQueryPage || "1"));
 };
 
 export default useCurrentPage;
