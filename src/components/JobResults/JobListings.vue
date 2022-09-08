@@ -32,14 +32,14 @@
   </main>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // import axios from "axios";
 import JobListing from "@/components/JobResults/JobListing.vue";
 import { onMounted, computed, unref } from "vue";
 // import { useRoute } from "vue-router";
 // import { storeToRefs } from "pinia";
 import { useJobsStore } from "@/store/store";
-import useCurrentPage from "@/composables/useCurrentPage.js";
+import useCurrentPage from "@/composables/useCurrentPage";
 import usePreviousAndNextPage from "@/composables/usePreviousAndNextPage"
 
 // const route = useRoute();
