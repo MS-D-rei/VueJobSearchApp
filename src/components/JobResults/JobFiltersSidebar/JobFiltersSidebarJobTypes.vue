@@ -25,7 +25,7 @@
   </AccordionContainer>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import AccordionContainer from "@/components/Shared/AccordionContainer.vue";
 import { useJobsStore } from "@/store/store";
 import { storeToRefs } from "pinia";
