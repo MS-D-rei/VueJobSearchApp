@@ -17,24 +17,26 @@
         header="Job Types"
         :group="jobsStore.uniqueJobTypes"
         model-name="selectedJobTypes"
+        data-test="job-types-filter"
       />
 
       <JobFiltersSidebarCheckboxGroup
         header="Organizations"
         :group="jobsStore.uniqueOrganizations"
         model-name="selectedOrganizations"
+        data-test="job-organizations-filter"
       />
     </section>
   </div>
 </template>
 
-<script setup>
-import ActionButton from "@/components/Shared/ActionButton.vue";
-import AccordionContainer from "@/components/Shared/AccordionContainer.vue";
+<script setup lang="ts">
+import ActionButton from '@/components/Shared/ActionButton.vue';
+import AccordionContainer from '@/components/Shared/AccordionContainer.vue';
 // import JobFiltersSidebarOrganizations from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarOrganizations.vue"
 // import JobFiltersSidebarJobTypes from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarJobTypes.vue"
-import JobFiltersSidebarCheckboxGroup from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarCheckboxGroup.vue";
-import { useJobsStore } from "@/store/store";
+import JobFiltersSidebarCheckboxGroup from '@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarCheckboxGroup.vue';
+import { useJobsStore } from '@/store/store';
 
 const jobsStore = useJobsStore();
 </script>
