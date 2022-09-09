@@ -14,7 +14,8 @@ export default defineConfig(({ command, mode }) => {
       }
     },
     define: {
-      __APP_ENV__: env.APP_ENV
+      // __APP_ENV__: env.APP_ENV,
+      'process.env': env
     }
   }
 })
