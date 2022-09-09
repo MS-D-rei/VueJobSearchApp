@@ -3,7 +3,7 @@
  */
 
 import { mount } from "@vue/test-utils";
-import JobSearchForm from "@/components/JobSearch/JobSearchForm";
+import JobSearchForm from "@/components/JobSearch/JobSearchForm.vue";
 import { useRouter } from "vue-router";
 
 // vue-utils vue-router with Composition API
@@ -12,12 +12,13 @@ import { useRouter } from "vue-router";
 jest.mock("vue-router", () => ({
   useRouter: jest.fn(),
 }));
+const mockUseRouter = useRouter as jest.Mock;
 
 describe("JobSearchForm", () => {
   describe("when user submits form", () => {
     it("directs user to job results page with user's input params", async () => {
       const push = jest.fn();
-      useRouter.mockImplementationOnce(() => ({
+      mockUseRouter.mockImplementationOnce(() => ({
         push,
       }));
 
