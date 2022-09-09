@@ -2,29 +2,34 @@
  * @jest-environment jsdom
  */
 
-import { mount } from "@vue/test-utils";
-import JobFiltersSidebarCheckboxGroup from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarCheckboxGroup.vue";
-import { setActivePinia, createPinia } from "pinia";
-import { createTestingPinia } from "@pinia/testing";
-import { useRouter } from "vue-router";
-import { useJobsStore } from "@/store/store";
+import { mount } from '@vue/test-utils';
+import JobFiltersSidebarCheckboxGroup from '@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarCheckboxGroup.vue';
+import { setActivePinia, createPinia } from 'pinia';
+import { createTestingPinia } from '@pinia/testing';
+import { useRouter } from 'vue-router';
+import { useJobsStore } from '@/store/store';
 
-jest.mock("vue-router", () => ({
+jest.mock('vue-router', () => ({
   useRouter: jest.fn(),
 }));
+const mockUseRouter = useRouter as jest.Mock;
 
 beforeEach(() => {
   setActivePinia(createPinia());
 });
 
-describe("JobFiltersSidebarCheckboxGroup", () => {
+describe('JobFiltersSidebarCheckboxGroup', () => {
   const createPropsConfig = (props = {}) => ({
-    header: "Job Types",
-    group: new Set(["TypeA", "TypeB", "TypeC"]),
-    modelName: "selectedJobTypes",
+    header: 'Job Types',
+    group: new Set(['TypeA', 'TypeB', 'TypeC']),
+    modelName: 'selectedJobTypes',
     ...props,
   });
-  const createConfig = (propsConfig) => ({
+  const createConfig = (propsConfig: {
+    header: string;
+    group: Set<string>;
+    modelName: string;
+  }) => ({
     global: {
       stubs: {
         AccordionContainer: false,
@@ -36,10 +41,10 @@ describe("JobFiltersSidebarCheckboxGroup", () => {
       ...propsConfig,
     },
   });
-  it("renders unique group list from props", async () => {
+  it('renders unique group list from props', async () => {
     // Make wrapper with props
     const propsConfig = createPropsConfig({
-      group: new Set(["TypeA", "TypeB", "TypeC"]),
+      group: new Set(['TypeA', 'TypeB', 'TypeC']),
     });
     const wrapper = mount(
       JobFiltersSidebarCheckboxGroup,
@@ -47,21 +52,21 @@ describe("JobFiltersSidebarCheckboxGroup", () => {
     );
     // Open accordion
     const clickableArea = wrapper.find("[data-test='clickable-area']");
-    await clickableArea.trigger("click");
+    await clickableArea.trigger('click');
     // Extract label names
     const jobTypeLabels = wrapper.findAll("[data-test='labelName']");
     const jobTypes = jobTypeLabels.map((node) => node.text());
-    expect(jobTypes).toEqual(["TypeA", "TypeB", "TypeC"]);
+    expect(jobTypes).toEqual(['TypeA', 'TypeB', 'TypeC']);
   });
-  it("when check item, selectedItemList will include it", async () => {
+  it('when check item, selectedItemList will include it', async () => {
     // Mock router
     const push = jest.fn();
-    useRouter.mockImplementationOnce(() => ({
+    mockUseRouter.mockImplementationOnce(() => ({
       push,
     }));
     // Make wrapper with props
     const propsConfig = createPropsConfig({
-      group: new Set(["TypeA", "TypeB", "TypeC"]),
+      group: new Set(['TypeA', 'TypeB', 'TypeC']),
     });
     const wrapper = mount(
       JobFiltersSidebarCheckboxGroup,
@@ -71,28 +76,32 @@ describe("JobFiltersSidebarCheckboxGroup", () => {
     const jobsStore = useJobsStore();
     // Open accordion
     const clickableArea = wrapper.find("[data-test='clickable-area']");
-    await clickableArea.trigger("click");
+    await clickableArea.trigger('click');
     // Check Full-time checkbox
     const fullTimeInput = wrapper.find("[data-test='TypeA']");
-    await fullTimeInput.setChecked();
-    expect(jobsStore.selectedJobTypes).toEqual(["TypeA"]);
+    // await fullTimeInput.setChecked();
+    // setValue -- Vue Test Utils
+    // https://test-utils.vuejs.org/api/#setvalue
+    await fullTimeInput.setValue(true);
+    expect(jobsStore.selectedJobTypes).toEqual(['TypeA']);
   });
-  it("when check item, go back to the first page", async () => {
+  it('when check item, go back to the first page', async () => {
     const push = jest.fn();
-    useRouter.mockImplementationOnce(() => ({
+    mockUseRouter.mockImplementationOnce(() => ({
       push,
     }));
     const propsConfig = createPropsConfig({
-      group: new Set(["TypeA", "TypeB", "TypeC"]),
+      group: new Set(['TypeA', 'TypeB', 'TypeC']),
     });
     const wrapper = mount(
       JobFiltersSidebarCheckboxGroup,
       createConfig(propsConfig)
     );
     const clickableArea = wrapper.find("[data-test='clickable-area']");
-    await clickableArea.trigger("click");
+    await clickableArea.trigger('click');
     const fullTimeInput = wrapper.find("[data-test='TypeA']");
-    await fullTimeInput.setChecked();
-    expect(push).toHaveBeenCalledWith({ name: "JobSearchResults" });
+    // await fullTimeInput.setChecked();
+    await fullTimeInput.setValue(true);
+    expect(push).toHaveBeenCalledWith({ name: 'JobSearchResults' });
   });
 });

@@ -25,8 +25,9 @@
   </AccordionContainer>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import AccordionContainer from "@/components/Shared/AccordionContainer.vue";
+import { Ref } from "vue";
 import { useJobsStore } from "@/store/store";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
@@ -41,7 +42,7 @@ const props = defineProps({
     required: true,
   },
   group: {
-    type: Set,
+    type: Set<string>,
     requied: true,
     default() {
       return new Set();
@@ -53,8 +54,12 @@ const props = defineProps({
   }
 })
 
-const groupList = { selectedJobTypes, selectedOrganizations };
-const selectedItems = groupList[props.modelName]
+interface GroupList {
+  selectedJobTypes: Ref<string[]>;
+  selectedOrganizations: Ref<string[]>;
+}
+const groupList: GroupList = { selectedJobTypes, selectedOrganizations };
+const selectedItems = groupList[props.modelName as keyof GroupList];
 
 function backToFirstPage() {
   router.push({ name: "JobSearchResults" });
