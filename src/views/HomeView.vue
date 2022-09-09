@@ -2,7 +2,7 @@
   <HeroSection />
 </template>
 
-<script setup>
+<script setup lang="ts">
 import HeroSection from '@/components/JobSearch/HeroSection.vue';
 </script>
 
