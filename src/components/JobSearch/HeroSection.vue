@@ -49,7 +49,7 @@
   </main>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import HeadLine from "@/components/JobSearch/HeadLine.vue";
 import JobSearchForm from "@/components/JobSearch/JobSearchForm.vue";
 import JobSpotlight from "@/components/JobSearch/JobSpotlight.vue";
