@@ -4,4 +4,5 @@ export interface JobState {
   openingJobs: Job[];
   selectedOrganizations: string[];
   selectedJobTypes: string[];
+  selectedDegrees: string[];
 }

@@ -1,9 +1,10 @@
-import { defineStore } from "pinia";
-import getJobs from "@/api/getJobs";
-import { JobState } from "@/store/types";
-import { Job } from "@/api/types";
+import { defineStore } from 'pinia';
+import getJobs from '@/api/getJobs';
+import getDegrees from '@/api/getDegrees';
+import { JobState } from '@/store/types';
+import { Job } from '@/api/types';
 
-export const useLoginStore = defineStore("login", {
+export const useLoginStore = defineStore('login', {
   state: () => ({
     isLoggedIn: false,
   }),
@@ -14,14 +15,15 @@ export const useLoginStore = defineStore("login", {
   },
 });
 
-export const useJobsStore = defineStore("jobs", {
+export const useJobsStore = defineStore('jobs', {
   state: (): JobState => ({
     openingJobs: [],
     selectedOrganizations: [],
     selectedJobTypes: [],
+    selectedDegrees: [],
   }),
   getters: {
-    uniqueOrganizations: (state: JobState):Set<string> => {
+    uniqueOrganizations: (state: JobState): Set<string> => {
       const uniqueOrganizations = new Set<string>();
       state.openingJobs.forEach((job) => {
         // console.log(job.organization);
@@ -77,6 +79,12 @@ export const useJobsStore = defineStore("jobs", {
       const jobData = await getJobs();
       if (jobData) {
         this.openingJobs = jobData;
+      }
+    },
+    async fetchDegrees() {
+      const degreesData = await getDegrees();
+      if (degreesData) {
+        return degreesData;
       }
     },
   },

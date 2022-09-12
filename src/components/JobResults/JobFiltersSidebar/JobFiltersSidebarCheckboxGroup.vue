@@ -34,7 +34,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 const jobsStore = useJobsStore();
-const { selectedJobTypes, selectedOrganizations } = storeToRefs(jobsStore);
+const { selectedJobTypes, selectedOrganizations, selectedDegrees } = storeToRefs(jobsStore);
 
 const props = defineProps({
   header: {
@@ -57,8 +57,9 @@ const props = defineProps({
 interface GroupList {
   selectedJobTypes: Ref<string[]>;
   selectedOrganizations: Ref<string[]>;
+  selectedDegrees: Ref<string[]>;
 }
-const groupList: GroupList = { selectedJobTypes, selectedOrganizations };
+const groupList: GroupList = { selectedJobTypes, selectedOrganizations, selectedDegrees };
 const selectedItems = groupList[props.modelName as keyof GroupList];
 
 function backToFirstPage() {
