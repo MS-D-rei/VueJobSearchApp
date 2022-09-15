@@ -107,14 +107,17 @@ describe('Jobs Store', () => {
       const jobGoogleFullTime = createJob({
         organization: 'Google',
         jobType: 'Full-time',
+        degree: "Master's"
       });
       const jobAmazonPartTime = createJob({
         organization: 'Amazon',
         jobType: 'Part-time',
+        degree: "Bachelor's"
       });
       const jobMicrosoftIntern = createJob({
         organization: 'Microsoft',
         jobType: 'Intern',
+        degree: "Bachelor's"
       });
       const sampleJobData = [
         jobGoogleFullTime,
@@ -175,6 +178,25 @@ describe('Jobs Store', () => {
           );
         });
       });
+
+      describe('compute jobsIncludeDegrees', () => {
+        it('when no selected degrees, includes all jobs', () => {
+          const jobsStore = useJobsStore();
+          jobsStore.openingJobs = sampleJobData;
+          jobsStore.selectedDegrees = [];
+          expect(jobsStore.jobIncludesDegree(jobGoogleFullTime)).toBe(true);
+          expect(jobsStore.jobIncludesDegree(jobAmazonPartTime)).toBe(true);
+          expect(jobsStore.jobIncludesDegree(jobMicrosoftIntern)).toBe(true);
+        })
+        it('when at least one degree selected, filter openingJobs with it', () => {
+          const jobsStore = useJobsStore();
+          jobsStore.openingJobs = sampleJobData;
+          jobsStore.selectedDegrees = ["Bachelor's"];
+          expect(jobsStore.jobIncludesDegree(jobGoogleFullTime)).toBe(false);
+          expect(jobsStore.jobIncludesDegree(jobAmazonPartTime)).toBe(true);
+          expect(jobsStore.jobIncludesDegree(jobMicrosoftIntern)).toBe(true);
+        })
+      })
 
       it('when no selection, return all openingJobs', () => {
         const jobsStore = useJobsStore();

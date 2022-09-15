@@ -54,6 +54,10 @@ export const useJobsStore = defineStore('jobs', {
       if (state.selectedJobTypes.length === 0) return true;
       return state.selectedJobTypes.includes(job.jobType);
     },
+    jobIncludesDegree: (state: JobState) => (job: Job) => {
+      if (state.selectedDegrees.length === 0) return true;
+      return state.selectedDegrees.includes(job.degree);
+    },
     filteredJobs: function (state: JobState): Job[] {
       // if (
       //   state.selectedOrganizations.length === 0 &&
