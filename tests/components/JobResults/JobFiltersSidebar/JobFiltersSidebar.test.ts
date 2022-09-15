@@ -43,6 +43,7 @@ describe('JobFiltersSidebar', () => {
     // @ts-expect-error: Getter is read-only but writable in test
     jobsStore.uniqueJobTypes = undefined;
   });
+
   it('allows users to filter jobs by organization', async () => {
     const wrapperConfig = createConfig();
     const wrapper = mount(JobFiltersSidebar, wrapperConfig);
@@ -59,5 +60,23 @@ describe('JobFiltersSidebar', () => {
     expect(group).toEqual(testOrganizations);
     // @ts-expect-error: Getter is writable in test
     jobsStore.uniqueOrganizations = undefined;
+  });
+
+  it('allows users to filter jobs by degree', async () => {
+    const wrapperConfig = createConfig();
+    const wrapper = mount(JobFiltersSidebar, wrapperConfig);
+    const jobsStore = useJobsStore();
+    const testDegrees = new Set(["Bachelor's", "Master's"]);
+    // @ts-expect-error: Getter is read-only but writable only in test
+    jobsStore.uniqueDegrees = testDegrees;
+    await flushPromises();
+    const degreesFilter = wrapper.findComponent<DefineComponent>(
+      "[data-test='job-degrees-filter']"
+    );
+    const { header, group } = degreesFilter.props();
+    expect(header).toBe('Degrees');
+    expect(group).toEqual(testDegrees);
+    // @ts-expect-error: Getter is writable only in test, this is for neutralizing
+    jobsStore.uniqueDegrees = undefined;
   });
 });

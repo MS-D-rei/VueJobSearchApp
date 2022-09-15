@@ -31,6 +31,7 @@
         header="Degrees"
         :group="jobsStore.uniqueDegrees"
         model-name="selectedDegrees"
+        data-test="job-degrees-filter"
       />
     </section>
   </div>
