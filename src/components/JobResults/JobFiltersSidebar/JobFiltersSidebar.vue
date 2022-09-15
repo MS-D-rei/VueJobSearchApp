@@ -10,7 +10,7 @@
         </div>
       </div>
 
-      <AccordionContainer header="Fallback content"></AccordionContainer>
+      <!-- <AccordionContainer header="Fallback content"></AccordionContainer> -->
 
       <!-- <JobFiltersSidebarJobTypes /> -->
       <JobFiltersSidebarCheckboxGroup
@@ -39,7 +39,7 @@
 
 <script setup lang="ts">
 import ActionButton from '@/components/Shared/ActionButton.vue';
-import AccordionContainer from '@/components/Shared/AccordionContainer.vue';
+// import AccordionContainer from '@/components/Shared/AccordionContainer.vue';
 // import JobFiltersSidebarOrganizations from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarOrganizations.vue"
 // import JobFiltersSidebarJobTypes from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarJobTypes.vue"
 import JobFiltersSidebarCheckboxGroup from '@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarCheckboxGroup.vue';

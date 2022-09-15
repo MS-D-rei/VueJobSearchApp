@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import AccordionContainer from "@/components/Shared/AccordionContainer.vue";
-import { Ref } from "vue";
+import { PropType, Ref } from "vue";
 import { useJobsStore } from "@/store/store";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
@@ -42,7 +42,8 @@ const props = defineProps({
     required: true,
   },
   group: {
-    type: Set<string>,
+    // https://vuejs.org/guide/typescript/composition-api.html
+    type: [Array, Set] as PropType<string[] | Set<string>>,
     requied: true,
     default() {
       return new Set();
