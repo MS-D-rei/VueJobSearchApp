@@ -83,7 +83,8 @@ export const useJobsStore = defineStore('jobs', {
       // }
       return state.openingJobs
         .filter((job) => this.jobIncludesOrganization(job)) // use arrow function to use this
-        .filter((job) => this.jobIncludesJobType(job));
+        .filter((job) => this.jobIncludesJobType(job))
+        .filter((job) => this.jobIncludesDegree(job));
     },
   },
   actions: {

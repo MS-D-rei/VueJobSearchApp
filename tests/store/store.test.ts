@@ -12,7 +12,7 @@ import getJobs from '@/api/getJobs';
 jest.mock('@/api/getJobs');
 const mockGetJobs = getJobs as jest.Mock;
 
-import getDegrees from '@/api/getDegrees'
+import getDegrees from '@/api/getDegrees';
 jest.mock('@/api/getDegrees');
 const mockGetDegrees = getDegrees as jest.Mock;
 
@@ -60,7 +60,7 @@ describe('Jobs Store', () => {
     it('stores degrees that use would like to filter job by', () => {
       const jobsStore = useJobsStore();
       expect(jobsStore.selectedDegrees).toEqual([]);
-    })
+    });
   });
 
   describe('Jobs Store Getters', () => {
@@ -97,27 +97,29 @@ describe('Jobs Store', () => {
       const sampleDegreesData = [
         createDegree({ id: 1, degree: "Bachelor's" }),
         createDegree({ id: 2, degree: "Master's" }),
-        createDegree({ id: 3, degree: "Master's" })
-      ]
+        createDegree({ id: 3, degree: "Master's" }),
+      ];
       jobsStore.degrees = sampleDegreesData;
-      expect(jobsStore.uniqueDegrees).toEqual(new Set(["Bachelor's", "Master's"]))
-    })
+      expect(jobsStore.uniqueDegrees).toEqual(
+        new Set(["Bachelor's", "Master's"])
+      );
+    });
 
     describe('compute filteredJobs', () => {
       const jobGoogleFullTime = createJob({
         organization: 'Google',
         jobType: 'Full-time',
-        degree: "Master's"
+        degree: "Master's",
       });
       const jobAmazonPartTime = createJob({
         organization: 'Amazon',
         jobType: 'Part-time',
-        degree: "Bachelor's"
+        degree: "Bachelor's",
       });
       const jobMicrosoftIntern = createJob({
         organization: 'Microsoft',
         jobType: 'Intern',
-        degree: "Bachelor's"
+        degree: "Bachelor's",
       });
       const sampleJobData = [
         jobGoogleFullTime,
@@ -161,21 +163,17 @@ describe('Jobs Store', () => {
           const jobsStore = useJobsStore();
           jobsStore.openingJobs = sampleJobData;
           jobsStore.selectedJobTypes = [];
-          expect(jobsStore.jobIncludesJobType(jobGoogleFullTime)).toEqual(true);
-          expect(jobsStore.jobIncludesJobType(jobAmazonPartTime)).toEqual(true);
-          expect(jobsStore.jobIncludesJobType(jobMicrosoftIntern)).toEqual(
-            true
-          );
+          expect(jobsStore.jobIncludesJobType(jobGoogleFullTime)).toBe(true);
+          expect(jobsStore.jobIncludesJobType(jobAmazonPartTime)).toBe(true);
+          expect(jobsStore.jobIncludesJobType(jobMicrosoftIntern)).toBe(true);
         });
         it('when at least one jobType selected, filter openingJobs with it', () => {
           const jobsStore = useJobsStore();
           jobsStore.openingJobs = sampleJobData;
           jobsStore.selectedJobTypes = ['Full-time', 'Part-time'];
-          expect(jobsStore.jobIncludesJobType(jobGoogleFullTime)).toEqual(true);
-          expect(jobsStore.jobIncludesJobType(jobAmazonPartTime)).toEqual(true);
-          expect(jobsStore.jobIncludesJobType(jobMicrosoftIntern)).toEqual(
-            false
-          );
+          expect(jobsStore.jobIncludesJobType(jobGoogleFullTime)).toBe(true);
+          expect(jobsStore.jobIncludesJobType(jobAmazonPartTime)).toBe(true);
+          expect(jobsStore.jobIncludesJobType(jobMicrosoftIntern)).toBe(false);
         });
       });
 
@@ -187,7 +185,7 @@ describe('Jobs Store', () => {
           expect(jobsStore.jobIncludesDegree(jobGoogleFullTime)).toBe(true);
           expect(jobsStore.jobIncludesDegree(jobAmazonPartTime)).toBe(true);
           expect(jobsStore.jobIncludesDegree(jobMicrosoftIntern)).toBe(true);
-        })
+        });
         it('when at least one degree selected, filter openingJobs with it', () => {
           const jobsStore = useJobsStore();
           jobsStore.openingJobs = sampleJobData;
@@ -195,36 +193,44 @@ describe('Jobs Store', () => {
           expect(jobsStore.jobIncludesDegree(jobGoogleFullTime)).toBe(false);
           expect(jobsStore.jobIncludesDegree(jobAmazonPartTime)).toBe(true);
           expect(jobsStore.jobIncludesDegree(jobMicrosoftIntern)).toBe(true);
-        })
-      })
+        });
+      });
 
       it('when no selection, return all openingJobs', () => {
         const jobsStore = useJobsStore();
         jobsStore.openingJobs = sampleJobData;
         jobsStore.selectedOrganizations = [];
         jobsStore.selectedJobTypes = [];
+        jobsStore.selectedDegrees = [];
         expect(jobsStore.filteredJobs).toEqual(jobsStore.openingJobs);
       });
 
-      it('when no selected job types, filteredJobs filtered with uniqueOrganizations', () => {
+      it('when no selected job types, filteredJobs is filtered with other selected factors', () => {
         const jobsStore = useJobsStore();
         jobsStore.openingJobs = sampleJobData;
         jobsStore.selectedOrganizations = ['Google', 'Microsoft'];
         jobsStore.selectedJobTypes = [];
-        expect(jobsStore.filteredJobs).toEqual([
-          jobGoogleFullTime, jobMicrosoftIntern
-        ]);
+        jobsStore.selectedDegrees = ["Master's"];
+        expect(jobsStore.filteredJobs).toEqual([jobGoogleFullTime]);
       });
 
-      it('when no selected organizations, filteredJobs filtered with selectedJobTypes', () => {
+      it('when no selected organizations, filteredJobs is filtered with other selected factors', () => {
         const jobsStore = useJobsStore();
         jobsStore.openingJobs = sampleJobData;
         jobsStore.selectedOrganizations = [];
         jobsStore.selectedJobTypes = ['Full-time', 'Part-time'];
-        expect(jobsStore.filteredJobs).toEqual([
-          jobGoogleFullTime, jobAmazonPartTime
-        ]);
+        jobsStore.selectedDegrees = ["Master's"];
+        expect(jobsStore.filteredJobs).toEqual([jobGoogleFullTime]);
       });
+
+      it('when no selected degrees, filteredJobs is filtered with other selected factors', () => {
+        const jobsStore = useJobsStore();
+        jobsStore.openingJobs = sampleJobData;
+        jobsStore.selectedOrganizations = ['Google', 'Microsoft'];
+        jobsStore.selectedJobTypes = ['Full-time', 'Part-time'];
+        jobsStore.selectedDegrees = [];
+        expect(jobsStore.filteredJobs).toEqual([jobGoogleFullTime]);
+      })
     });
   });
 
@@ -253,6 +259,6 @@ describe('Jobs Store', () => {
       mockGetDegrees.mockImplementationOnce(() => mockDegreesData);
       await jobsStore.fetchDegrees();
       expect(jobsStore.degrees).toEqual(mockDegreesData);
-    })
+    });
   });
 });
