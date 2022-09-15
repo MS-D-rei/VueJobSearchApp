@@ -260,5 +260,16 @@ describe('Jobs Store', () => {
       await jobsStore.fetchDegrees();
       expect(jobsStore.degrees).toEqual(mockDegreesData);
     });
+
+    it('clear all factors filtering jobs', () => {
+      const jobsStore = useJobsStore();
+      jobsStore.selectedOrganizations = ["Google", "Amazon", "Microsoft"];
+      jobsStore.selectedJobTypes = ["Full-time", "Part-time"];
+      jobsStore.selectedDegrees = ["Bachelor's", "Master's"];
+      jobsStore.clearFilters();
+      expect(jobsStore.selectedOrganizations).toEqual([]);
+      expect(jobsStore.selectedJobTypes).toEqual([]);
+      expect(jobsStore.selectedDegrees).toEqual([]);
+    })
   });
 });

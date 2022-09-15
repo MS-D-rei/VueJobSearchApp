@@ -100,5 +100,10 @@ export const useJobsStore = defineStore('jobs', {
         this.degrees = degreesData;
       }
     },
+    clearFilters() {
+      this.selectedOrganizations = [];
+      this.selectedJobTypes = [];
+      this.selectedDegrees = [];
+    },
   },
 });
