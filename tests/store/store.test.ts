@@ -5,7 +5,7 @@
 import { setActivePinia, createPinia } from 'pinia';
 import { useLoginStore, useJobsStore } from '@/store/store';
 import { jest } from '@jest/globals';
-import { createJob } from './utils';
+import { createJob, createDegree } from './utils';
 import { Degree } from '@/api/types';
 
 import getJobs from '@/api/getJobs';
@@ -79,7 +79,7 @@ describe('Jobs Store', () => {
       );
     });
 
-    it('compute uniqueJobTypes with checked job types', () => {
+    it('compute uniqueJobTypes from list of jobs', () => {
       const jobsStore = useJobsStore();
       const sampleJobData = [
         createJob({ jobType: 'Full-time' }),
@@ -91,6 +91,17 @@ describe('Jobs Store', () => {
         new Set(['Full-time', 'Part-time'])
       );
     });
+
+    it('compute uniqueDegrees from backend data', () => {
+      const jobsStore = useJobsStore();
+      const sampleDegreesData = [
+        createDegree({ id: 1, degree: "Bachelor's" }),
+        createDegree({ id: 2, degree: "Master's" }),
+        createDegree({ id: 3, degree: "Master's" })
+      ]
+      jobsStore.degrees = sampleDegreesData;
+      expect(jobsStore.uniqueDegrees).toEqual(new Set(["Bachelor's", "Master's"]))
+    })
 
     describe('compute filteredJobs', () => {
       const jobGoogleFullTime = createJob({
@@ -218,8 +229,8 @@ describe('Jobs Store', () => {
         },
       ];
       mockGetDegrees.mockImplementationOnce(() => mockDegreesData);
-      const fetchedData = await jobsStore.fetchDegrees();
-      expect(fetchedData).toEqual(mockDegreesData);
+      await jobsStore.fetchDegrees();
+      expect(jobsStore.degrees).toEqual(mockDegreesData);
     })
   });
 });

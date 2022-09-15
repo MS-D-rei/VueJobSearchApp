@@ -26,6 +26,12 @@
         model-name="selectedOrganizations"
         data-test="job-organizations-filter"
       />
+
+      <JobFiltersSidebarCheckboxGroup
+        header="Degrees"
+        :group="jobsStore.uniqueDegrees"
+        model-name="selectedDegrees"
+      />
     </section>
   </div>
 </template>
@@ -37,8 +43,14 @@ import AccordionContainer from '@/components/Shared/AccordionContainer.vue';
 // import JobFiltersSidebarJobTypes from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarJobTypes.vue"
 import JobFiltersSidebarCheckboxGroup from '@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarCheckboxGroup.vue';
 import { useJobsStore } from '@/store/store';
+import { onMounted } from 'vue';
 
 const jobsStore = useJobsStore();
+// const { fetchDegrees } = jobsStore;
+
+onMounted(async () => {
+  await jobsStore.fetchDegrees();
+});
 </script>
 
 <style scoped></style>

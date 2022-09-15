@@ -18,6 +18,7 @@ export const useLoginStore = defineStore('login', {
 export const useJobsStore = defineStore('jobs', {
   state: (): JobState => ({
     openingJobs: [],
+    degrees: [],
     selectedOrganizations: [],
     selectedJobTypes: [],
     selectedDegrees: [],
@@ -37,6 +38,13 @@ export const useJobsStore = defineStore('jobs', {
         uniqueJobTypes.add(job.jobType);
       });
       return uniqueJobTypes;
+    },
+    uniqueDegrees: (state: JobState): Set<string> => {
+      const uniqueDegrees: Set<string> = new Set();
+      state.degrees.forEach((item) => {
+        uniqueDegrees.add(item.degree);
+      });
+      return uniqueDegrees;
     },
     jobIncludesOrganization: (state: JobState) => (job: Job) => {
       if (state.selectedOrganizations.length === 0) return true;
@@ -84,7 +92,7 @@ export const useJobsStore = defineStore('jobs', {
     async fetchDegrees() {
       const degreesData = await getDegrees();
       if (degreesData) {
-        return degreesData;
+        this.degrees = degreesData;
       }
     },
   },
