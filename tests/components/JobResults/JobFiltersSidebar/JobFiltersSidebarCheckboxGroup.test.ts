@@ -20,20 +20,18 @@ beforeEach(() => {
 
 describe('JobFiltersSidebarCheckboxGroup', () => {
   const createPropsConfig = (props = {}) => ({
-    header: 'Job Types',
     group: new Set(['TypeA', 'TypeB', 'TypeC']),
     modelName: 'selectedJobTypes',
     ...props,
   });
   const createConfig = (propsConfig: {
-    header: string;
     group: Set<string>;
     modelName: string;
   }) => ({
     global: {
       stubs: {
-        AccordionContainer: false,
-        FontAwesomeIcon: true,
+        // AccordionContainer: false,
+        // FontAwesomeIcon: true,
       },
       plugins: [createTestingPinia()],
     },
@@ -50,9 +48,9 @@ describe('JobFiltersSidebarCheckboxGroup', () => {
       JobFiltersSidebarCheckboxGroup,
       createConfig(propsConfig)
     );
-    // Open accordion
-    const clickableArea = wrapper.find("[data-test='clickable-area']");
-    await clickableArea.trigger('click');
+    // Open accordion /* no need to test because moved AccordionContainer to outside this component */
+    // const clickableArea = wrapper.find("[data-test='clickable-area']");
+    // await clickableArea.trigger('click');
     // Extract label names
     const jobTypeLabels = wrapper.findAll("[data-test='labelName']");
     const jobTypes = jobTypeLabels.map((node) => node.text());
@@ -74,9 +72,9 @@ describe('JobFiltersSidebarCheckboxGroup', () => {
     );
     // Make wrapper => create store, otherwise can't use store
     const jobsStore = useJobsStore();
-    // Open accordion
-    const clickableArea = wrapper.find("[data-test='clickable-area']");
-    await clickableArea.trigger('click');
+    // Open accordion /* no need to test because moved AccordionContainer to outside this component */
+    // const clickableArea = wrapper.find("[data-test='clickable-area']");
+    // await clickableArea.trigger('click');
     // Check Full-time checkbox
     const fullTimeInput = wrapper.find("[data-test='TypeA']");
     // await fullTimeInput.setChecked();
@@ -97,8 +95,9 @@ describe('JobFiltersSidebarCheckboxGroup', () => {
       JobFiltersSidebarCheckboxGroup,
       createConfig(propsConfig)
     );
-    const clickableArea = wrapper.find("[data-test='clickable-area']");
-    await clickableArea.trigger('click');
+    // Open accordion /* no need to test because moved AccordionContainer to outside this component */
+    // const clickableArea = wrapper.find("[data-test='clickable-area']");
+    // await clickableArea.trigger('click');
     const fullTimeInput = wrapper.find("[data-test='TypeA']");
     // await fullTimeInput.setChecked();
     await fullTimeInput.setValue(true);

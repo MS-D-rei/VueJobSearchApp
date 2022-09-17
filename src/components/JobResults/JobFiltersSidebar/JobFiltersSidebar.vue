@@ -6,43 +6,37 @@
       <div class="flex flex-row justify-between">
         <h3 class="my-4 text-base font-semibold">What do you want to do?</h3>
         <div class="flex items-center text-sm">
-          <ActionButton text="Clear Filters" type="search" @click="jobsStore.clearFilters" />
+          <ActionButton
+            text="Clear Filters"
+            type="search"
+            @click="jobsStore.clearFilters"
+          />
         </div>
       </div>
 
-      <!-- <AccordionContainer header="Fallback content"></AccordionContainer> -->
-
       <!-- <JobFiltersSidebarJobTypes /> -->
-      <JobFiltersSidebarCheckboxGroup
-        header="Job Types"
-        :group="jobsStore.uniqueJobTypes"
-        model-name="selectedJobTypes"
-        data-test="job-types-filter"
-      />
+      <AccordionContainer header="Job Types">
+        <JobFiltersSidebarJobTypes />
+      </AccordionContainer>
 
-      <JobFiltersSidebarCheckboxGroup
-        header="Organizations"
-        :group="jobsStore.uniqueOrganizations"
-        model-name="selectedOrganizations"
-        data-test="job-organizations-filter"
-      />
+      <AccordionContainer header="Organizations">
+        <JobFiltersSidebarOrganizations />
+      </AccordionContainer>
 
-      <JobFiltersSidebarCheckboxGroup
-        header="Degrees"
-        :group="jobsStore.uniqueDegrees"
-        model-name="selectedDegrees"
-        data-test="job-degrees-filter"
-      />
+      <AccordionContainer header="Degrees">
+        <JobFiltersSidebarDegrees />
+      </AccordionContainer>
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
 import ActionButton from '@/components/Shared/ActionButton.vue';
-// import AccordionContainer from '@/components/Shared/AccordionContainer.vue';
-// import JobFiltersSidebarOrganizations from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarOrganizations.vue"
-// import JobFiltersSidebarJobTypes from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarJobTypes.vue"
-import JobFiltersSidebarCheckboxGroup from '@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarCheckboxGroup.vue';
+import AccordionContainer from '@/components/Shared/AccordionContainer.vue';
+// import JobFiltersSidebarCheckboxGroup from '@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarCheckboxGroup.vue';
+import JobFiltersSidebarOrganizations from '@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarOrganizations.vue';
+import JobFiltersSidebarJobTypes from '@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarJobTypes.vue';
+import JobFiltersSidebarDegrees from '@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarDegrees.vue';
 import { useJobsStore } from '@/store/store';
 import { onMounted } from 'vue';
 

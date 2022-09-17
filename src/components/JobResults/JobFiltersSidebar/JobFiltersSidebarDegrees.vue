@@ -1,8 +1,8 @@
 <template>
   <JobFiltersSidebarCheckboxGroup
-    :group="jobsStore.uniqueOrganizations"
-    model-name="selectedOrganizations"
-    data-test="job-organizations-filter"
+    :group="jobsStore.uniqueDegrees"
+    model-name="selectedDegrees"
+    data-test="job-degrees-filter"
   />
 </template>
 
@@ -12,3 +12,5 @@ import { useJobsStore } from '@/store/store';
 
 const jobsStore = useJobsStore();
 </script>
+
+<style lang="scss" scoped></style>
