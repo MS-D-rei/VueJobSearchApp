@@ -5,6 +5,10 @@
     <section class="pb-5">
       <JobFiltersSidebarPrompt />
 
+      <AccordionContainer header="Skills and Qualifications">
+        <JobFiltersSidebarSkills />
+      </AccordionContainer>
+
       <AccordionContainer header="Job Types">
         <JobFiltersSidebarJobTypes />
       </AccordionContainer>
@@ -23,6 +27,7 @@
 <script setup lang="ts">
 import AccordionContainer from '@/components/Shared/AccordionContainer.vue';
 import JobFiltersSidebarPrompt from '@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarPrompt.vue';
+import JobFiltersSidebarSkills from '@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarSkills.vue';
 import JobFiltersSidebarOrganizations from '@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarOrganizations.vue';
 import JobFiltersSidebarJobTypes from '@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarJobTypes.vue';
 import JobFiltersSidebarDegrees from '@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarDegrees.vue';

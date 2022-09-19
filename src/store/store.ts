@@ -19,6 +19,7 @@ export const useJobsStore = defineStore('jobs', {
   state: (): JobState => ({
     openingJobs: [],
     degrees: [],
+    skillsSearchTerm: '',
     selectedOrganizations: [],
     selectedJobTypes: [],
     selectedDegrees: [],

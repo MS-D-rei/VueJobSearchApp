@@ -61,6 +61,11 @@ describe('Jobs Store', () => {
       const jobsStore = useJobsStore();
       expect(jobsStore.selectedDegrees).toEqual([]);
     });
+
+    it("stores user's search term for skills and qualifications", () => {
+      const jobsStore = useJobsStore();
+      expect(jobsStore.skillsSearchTerm).toBe('');
+    })
   });
 
   describe('Jobs Store Getters', () => {
