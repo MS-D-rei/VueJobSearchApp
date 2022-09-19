@@ -296,10 +296,12 @@ describe('Jobs Store', () => {
 
     it('clear all factors filtering jobs', () => {
       const jobsStore = useJobsStore();
+      jobsStore.skillsSearchTerm = 'Vue';
       jobsStore.selectedOrganizations = ['Google', 'Amazon', 'Microsoft'];
       jobsStore.selectedJobTypes = ['Full-time', 'Part-time'];
       jobsStore.selectedDegrees = ["Bachelor's", "Master's"];
       jobsStore.clearFilters();
+      expect(jobsStore.skillsSearchTerm).toBe('');
       expect(jobsStore.selectedOrganizations).toEqual([]);
       expect(jobsStore.selectedJobTypes).toEqual([]);
       expect(jobsStore.selectedDegrees).toEqual([]);
