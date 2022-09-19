@@ -70,22 +70,4 @@ describe("JobFiltersSidebarJobTypes", () => {
     await fullTimeInput.setValue(true);
     expect(jobsStore.selectedJobTypes).toEqual(["Full-time"]);
   });
-
-  // eslint-disable-next-line jest/no-commented-out-tests
-  // it("renders unique list of job types for filtering jobs", async () => {
-  //   const wrapper = mount(JobFiltersSidebarJobTypes, createConfig());
-  //   const jobsStore = useJobsStore();
-  //   // @ts-expect-error: pinia getter is writable in test
-  //   jobsStore.uniqueJobTypes = new Set(["Full-time", "Part-time"]);
-  //   // open Accordion
-  //   const clickableArea = wrapper.find("[data-test='clickable-area']");
-  //   await clickableArea.trigger("click");
-  //   // job types in Accordion are uniqueJobTypes
-  //   const jobTypeLabels = wrapper.findAll("[data-test='job-type']");
-  //   const jobTypes = jobTypeLabels.map((node) => node.text());
-  //   expect(jobTypes).toEqual(["Full-time", "Part-time"]);
-  //   // back to default behaivor
-  //   // @ts-expect-error: pinia getter is writable in test
-  //   jobsStore.uniqueJobTypes = undefined;
-  // });
 });
