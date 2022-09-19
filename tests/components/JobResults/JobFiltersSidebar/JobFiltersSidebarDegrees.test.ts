@@ -44,6 +44,8 @@ describe('JobFiltersSidebarDegrees', () => {
     );
     const { group } = degreesFilter.props();
     expect(group).toEqual(testDegreesSet);
+    // @ts-expect-error: pinia Getter is writable only in test
+    jobsStore.uniqueDegrees = undefined;
   });
 
   it('when check degree, selectedDegrees will include it', async () => {

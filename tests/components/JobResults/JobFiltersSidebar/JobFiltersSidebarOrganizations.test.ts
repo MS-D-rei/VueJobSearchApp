@@ -45,6 +45,8 @@ describe('JobFiltersSidebarOrganizations', () => {
     );
     const { group } = organizationsFilter.props();
     expect(group).toEqual(testOrganizations);
+    // @ts-expect-error: pinia Getter is writable only in test
+    jobsStore.uniqueOrganizations = undefined;
   });
 
   it('when check organization, selectedOrganizations will includes it', async () => {
@@ -52,7 +54,9 @@ describe('JobFiltersSidebarOrganizations', () => {
     mockUseRouter.mockImplementationOnce(() => ({
       push,
     }));
-    const wrapperConfig = createConfig({ stubs: {JobFiltersSidebarCheckboxGroup: false} })
+    const wrapperConfig = createConfig({
+      stubs: { JobFiltersSidebarCheckboxGroup: false },
+    });
     const wrapper = mount(JobFiltersSidebarOrganizations, wrapperConfig);
     const jobsStore = useJobsStore();
     // @ts-expect-error: pinia getter is writable only in test
