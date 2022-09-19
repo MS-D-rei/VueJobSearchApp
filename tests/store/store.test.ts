@@ -65,7 +65,7 @@ describe('Jobs Store', () => {
     it("stores user's search term for skills and qualifications", () => {
       const jobsStore = useJobsStore();
       expect(jobsStore.skillsSearchTerm).toBe('');
-    })
+    });
   });
 
   describe('Jobs Store Getters', () => {
@@ -112,16 +112,19 @@ describe('Jobs Store', () => {
 
     describe('compute filteredJobs', () => {
       const jobGoogleFullTime = createJob({
+        title: 'Vue Developer',
         organization: 'Google',
         jobType: 'Full-time',
         degree: "Master's",
       });
       const jobAmazonPartTime = createJob({
+        title: 'React Developer',
         organization: 'Amazon',
         jobType: 'Part-time',
         degree: "Bachelor's",
       });
       const jobMicrosoftIntern = createJob({
+        title: 'Angular Developer',
         organization: 'Microsoft',
         jobType: 'Intern',
         degree: "Bachelor's",
@@ -131,6 +134,31 @@ describe('Jobs Store', () => {
         jobAmazonPartTime,
         jobMicrosoftIntern,
       ];
+
+      describe('computes jobIncludeSkill', () => {
+        it('when no selected selectedSkill, includes all jobs', () => {
+          const jobsStore = useJobsStore();
+          jobsStore.openingJobs = sampleJobData;
+          jobsStore.skillsSearchTerm = '';
+          expect(jobsStore.jobIncludeSkill(jobGoogleFullTime)).toBe(true);
+          expect(jobsStore.jobIncludeSkill(jobAmazonPartTime)).toBe(true);
+          expect(jobsStore.jobIncludeSkill(jobMicrosoftIntern)).toBe(true);
+        });
+        it('when skillsSearchTerm is inputted, filter openingJobs with it', () => {
+          const jobsStore = useJobsStore();
+          jobsStore.openingJobs = sampleJobData;
+          jobsStore.skillsSearchTerm = 'Vue';
+          expect(jobsStore.jobIncludeSkill(jobGoogleFullTime)).toBe(true);
+          expect(jobsStore.jobIncludeSkill(jobAmazonPartTime)).toBe(false);
+          expect(jobsStore.jobIncludeSkill(jobMicrosoftIntern)).toBe(false);
+        })
+        it('selectedSkill is handled with incase-sensitive', () => {
+          const jobsStore = useJobsStore();
+          jobsStore.openingJobs = sampleJobData;
+          jobsStore.skillsSearchTerm = 'vuE';
+          expect(jobsStore.jobIncludeSkill(jobGoogleFullTime)).toBe(true);
+        })
+      });
 
       describe('computes jobsIncludeOrganization', () => {
         it('when no selected organization, includes all jobs', () => {
@@ -235,7 +263,7 @@ describe('Jobs Store', () => {
         jobsStore.selectedJobTypes = ['Full-time', 'Part-time'];
         jobsStore.selectedDegrees = [];
         expect(jobsStore.filteredJobs).toEqual([jobGoogleFullTime]);
-      })
+      });
     });
   });
 
@@ -268,13 +296,13 @@ describe('Jobs Store', () => {
 
     it('clear all factors filtering jobs', () => {
       const jobsStore = useJobsStore();
-      jobsStore.selectedOrganizations = ["Google", "Amazon", "Microsoft"];
-      jobsStore.selectedJobTypes = ["Full-time", "Part-time"];
+      jobsStore.selectedOrganizations = ['Google', 'Amazon', 'Microsoft'];
+      jobsStore.selectedJobTypes = ['Full-time', 'Part-time'];
       jobsStore.selectedDegrees = ["Bachelor's", "Master's"];
       jobsStore.clearFilters();
       expect(jobsStore.selectedOrganizations).toEqual([]);
       expect(jobsStore.selectedJobTypes).toEqual([]);
       expect(jobsStore.selectedDegrees).toEqual([]);
-    })
+    });
   });
 });

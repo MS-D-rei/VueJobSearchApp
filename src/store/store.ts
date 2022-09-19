@@ -47,6 +47,12 @@ export const useJobsStore = defineStore('jobs', {
       });
       return uniqueDegrees;
     },
+    jobIncludeSkill: (state: JobState) => (job: Job) => {
+      if (state.skillsSearchTerm.length === 0) return true;
+      return job.title
+        .toLowerCase()
+        .includes(state.skillsSearchTerm.toLowerCase());
+    },
     jobIncludesOrganization: (state: JobState) => (job: Job) => {
       if (state.selectedOrganizations.length === 0) return true;
       return state.selectedOrganizations.includes(job.organization);
@@ -83,6 +89,7 @@ export const useJobsStore = defineStore('jobs', {
       //     });
       // }
       return state.openingJobs
+        .filter((job) => this.jobIncludeSkill(job))
         .filter((job) => this.jobIncludesOrganization(job)) // use arrow function to use this
         .filter((job) => this.jobIncludesJobType(job))
         .filter((job) => this.jobIncludesDegree(job));
@@ -102,6 +109,7 @@ export const useJobsStore = defineStore('jobs', {
       }
     },
     clearFilters() {
+      this.skillsSearchTerm = '';
       this.selectedOrganizations = [];
       this.selectedJobTypes = [];
       this.selectedDegrees = [];
