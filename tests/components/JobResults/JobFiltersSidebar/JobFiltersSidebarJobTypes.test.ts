@@ -46,8 +46,8 @@ describe("JobFiltersSidebarJobTypes", () => {
     const jobTypesFilter = wrapper.findComponent<DefineComponent>(
       JobFiltersSidebarCheckboxGroup
     );
-    console.log(jobTypesFilter.html());
-    console.log(jobTypesFilter.props());
+    // console.log(jobTypesFilter.html());
+    // console.log(jobTypesFilter.props());
     const { group } = jobTypesFilter.props();
     expect(group).toEqual(testJobTypes);
     // @ts-expect-error: Getter is read-only but writable in test
