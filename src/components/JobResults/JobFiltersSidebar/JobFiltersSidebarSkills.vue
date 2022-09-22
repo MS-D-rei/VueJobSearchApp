@@ -13,9 +13,20 @@
 <script setup lang="ts">
 import { useJobsStore } from '@/store/store';
 import { storeToRefs } from 'pinia';
+// import { onMounted } from 'vue';
+// import { useRoute } from 'vue-router';
 
 const jobsStore = useJobsStore();
 const { skillsSearchTerm } = storeToRefs(jobsStore);
+// const route = useRoute();
+
+/* This function reflect JobSearchForm result on JobListings */
+/* But if this is deployed here, the search result will not be 
+affected on JobListings after pushing search button of JobSearchForm */
+// onMounted(() => {
+//   const roleSearchTerm = route.query.role as string || '';
+//   jobsStore.skillsSearchTerm = roleSearchTerm;
+// })
 </script>
 
 <style lang="scss" scoped></style>

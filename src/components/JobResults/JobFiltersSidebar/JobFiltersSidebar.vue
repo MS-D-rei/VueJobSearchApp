@@ -33,12 +33,20 @@ import JobFiltersSidebarJobTypes from '@/components/JobResults/JobFiltersSidebar
 import JobFiltersSidebarDegrees from '@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarDegrees.vue';
 import { useJobsStore } from '@/store/store';
 import { onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 
 const jobsStore = useJobsStore();
-// const { fetchDegrees } = jobsStore;
+const route = useRoute();
 
 onMounted(async () => {
   await jobsStore.fetchDegrees();
+  
+  try {
+    const roleSearchTerm = route.query.role as string || '';
+    jobsStore.skillsSearchTerm = roleSearchTerm;
+  } catch (err) {
+    console.log(err);
+  }
 });
 </script>
 

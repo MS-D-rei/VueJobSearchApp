@@ -6,8 +6,15 @@ import { mount } from '@vue/test-utils';
 import JobFiltersSidebar from '@/components/JobResults/JobFiltersSidebar/JobFiltersSidebar.vue';
 import { setActivePinia, createPinia } from 'pinia';
 import { createTestingPinia } from '@pinia/testing';
-// import { useJobsStore } from '@/store/store';
+import { useJobsStore } from '@/store/store';
 // import { DefineComponent } from 'vue';
+import { useRoute } from 'vue-router';
+import { nextTick } from 'vue';
+
+jest.mock('vue-router', () => ({
+  useRoute: jest.fn(),
+}));
+const mockUseRoute = useRoute as jest.Mock;
 
 describe('JobFiltersSidebar', () => {
   beforeEach(() => {
@@ -27,10 +34,29 @@ describe('JobFiltersSidebar', () => {
   });
 
   it('sets up panels for user to filter jobs by one or more criteria', () => {
+    mockUseRoute.mockImplementationOnce(() => ({
+      query: {
+        role: 'React',
+      },
+    }));
     const wrapperConfig = createConfig();
     const wrapper = mount(JobFiltersSidebar, wrapperConfig);
     expect(wrapper.exists()).toBe(true);
-  })
+  });
+
+  it('when on mounted, skillsSearchTerm gets roleSearchTerm from JobSearchForm', async () => {
+    mockUseRoute.mockImplementationOnce(() => ({
+      query: {
+        role: 'Vue',
+      },
+    }));
+    const wrapperConfig = createConfig();
+    mount(JobFiltersSidebar, wrapperConfig);
+    const jobsStore = useJobsStore();
+    // This nextTick() is required, if without it, jobsStore.skillsSearchTerm: ''
+    await nextTick();
+    expect(jobsStore.skillsSearchTerm).toBe('Vue');
+  });
 
   // eslint-disable-next-line jest/no-commented-out-tests
   // it('allows users to filter jobs by job types', async () => {
