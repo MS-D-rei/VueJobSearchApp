@@ -24,7 +24,7 @@ interface Spotlight {
 const spotlights = ref<Spotlight[]>([]);
 
 onMounted(async () => {
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const apiUrl = process.env.VITE_API_URL;
   const url = `${apiUrl}/spotlights`;
   const response = await axios.get<Spotlight[]>(url);
   spotlights.value = response.data;
